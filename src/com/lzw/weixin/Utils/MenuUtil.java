@@ -1,9 +1,6 @@
 package com.lzw.weixin.Utils;
 
-import com.lzw.weixin.menu.Button;
-import com.lzw.weixin.menu.CommonButton;
-import com.lzw.weixin.menu.ComplexButton;
-import com.lzw.weixin.menu.Menu;
+import com.lzw.weixin.menu.*;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,9 +37,9 @@ public class MenuUtil {
     public static Menu getMenu()
     {
         CommonButton btn11=new CommonButton();
-        btn11.setName("天气预报");
+        btn11.setName("点菜");
         btn11.setType("click");
-        btn11.setKey("11");
+        //btn11.setUrl("http://35.185.149.208/ordermenu.jsp");
 
         CommonButton btn12=new CommonButton();
         btn12.setName("公交查询");
@@ -101,7 +98,7 @@ public class MenuUtil {
 
         ComplexButton mainBtn1=new ComplexButton();
         mainBtn1.setName("生活助手");
-        mainBtn1.setSub_button(new CommonButton[]{btn11,btn12,btn13,btn14});
+        mainBtn1.setSub_button(new Button[]{btn11,btn12,btn13,btn14});
 
         ComplexButton mainBtn2=new ComplexButton();
         mainBtn2.setName("休闲驿站");
@@ -114,5 +111,43 @@ public class MenuUtil {
         Menu menu=new Menu();
         menu.setButton(new Button[]{mainBtn1,mainBtn2,mainBtn3});
         return menu;
+    }
+
+    public static int deleteMenu()
+    {
+        String token=TokenUtil.getToken().getAccessToken();
+        String url="https://api.weixin.qq.com/cgi-bin/menu/delete?access_token="+token;
+
+        int result=0;
+        JSONObject jsonObject=CommonUtil.httpsRequest(url,"POST",null);
+        if(null!=jsonObject)
+        {
+            if(0!=jsonObject.getInt("errcode"))
+            {
+                result=jsonObject.getInt("errcode");
+                log.error("删除菜单失败 errcode:{} errmsg:{}",jsonObject.getInt("errcode"),jsonObject.getString("errmsg"));
+            }
+        }
+
+        return result;
+    }
+
+    public static int searchMenu()
+    {
+        String token=TokenUtil.getToken().getAccessToken();
+        String url="https://api.weixin.qq.com/cgi-bin/menu/get?access_token="+token;
+
+        int result=0;
+        JSONObject jsonObject=CommonUtil.httpsRequest(url,"POST",null);
+        if(null!=jsonObject)
+        {
+            if(0!=jsonObject.getInt("errcode"))
+            {
+                result=jsonObject.getInt("errcode");
+                log.error("删除菜单失败 errcode:{} errmsg:{}",jsonObject.getInt("errcode"),jsonObject.getString("errmsg"));
+            }
+        }
+
+        return result;
     }
 }
