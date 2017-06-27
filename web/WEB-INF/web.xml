@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+
+    <filter>
+        <filter-name>ResourceFilter</filter-name>
+        <filter-class>com.lzw.weixin.servlet.Filter.ResourceFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ResourceFilter</filter-name>
+        <servlet-name>CoreServlet</servlet-name>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>CoreServlet</servlet-name>
+        <servlet-class>com.lzw.weixin.servlet.CoreServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CoreServlet</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+
+<!--
+    <servlet>
+        <servlet-name>initServlet</servlet-name>
+        <servlet-class>com.lzw.weixin.servlet.InitServlet</servlet-class>
+        <init-param>
+            <param-name>appID</param-name>
+            <param-value>wx2d080b58edae0b82</param-value>
+        </init-param>
+        <init-param>
+            <param-name>appsecret</param-name>
+            <param-value>044c3518a9877adfba62382dc738667f</param-value>
+        </init-param>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>oauthServlet</servlet-name>
+        <servlet-class>com.lzw.weixin.servlet.OAuthServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>oauthServlet</servlet-name>
+        <url-pattern>/oauthServlet</url-pattern>
+    </servlet-mapping>-->
+</web-app>
