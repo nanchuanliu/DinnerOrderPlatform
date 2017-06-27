@@ -36,10 +36,10 @@ public class MenuUtil {
 
     public static Menu getMenu()
     {
-        CommonButton btn11=new CommonButton();
+        ViewButton btn11=new ViewButton();
         btn11.setName("点菜");
-        btn11.setType("click");
-        //btn11.setUrl("http://35.185.149.208/ordermenu.jsp");
+        btn11.setType("view");
+        btn11.setUrl("http://35.185.149.208/ordermenu.jsp");
 
         CommonButton btn12=new CommonButton();
         btn12.setName("公交查询");
@@ -102,11 +102,11 @@ public class MenuUtil {
 
         ComplexButton mainBtn2=new ComplexButton();
         mainBtn2.setName("休闲驿站");
-        mainBtn2.setSub_button(new CommonButton[]{btn21,btn22,btn23,btn24,btn25});
+        mainBtn2.setSub_button(new Button[]{btn21,btn22,btn23,btn24,btn25});
 
         ComplexButton mainBtn3=new ComplexButton();
         mainBtn3.setName("更多体验");
-        mainBtn3.setSub_button(new CommonButton[]{btn31,btn32,btn33});
+        mainBtn3.setSub_button(new Button[]{btn31,btn32,btn33});
 
         Menu menu=new Menu();
         menu.setButton(new Button[]{mainBtn1,mainBtn2,mainBtn3});

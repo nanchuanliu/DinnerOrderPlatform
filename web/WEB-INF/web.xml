@@ -4,14 +4,13 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-
     <filter>
         <filter-name>ResourceFilter</filter-name>
         <filter-class>com.lzw.weixin.servlet.Filter.ResourceFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>ResourceFilter</filter-name>
-        <servlet-name>CoreServlet</servlet-name>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
     <servlet>
@@ -20,10 +19,9 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>CoreServlet</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-<!--
     <servlet>
         <servlet-name>initServlet</servlet-name>
         <servlet-class>com.lzw.weixin.servlet.InitServlet</servlet-class>
@@ -44,5 +42,27 @@
     <servlet-mapping>
         <servlet-name>oauthServlet</servlet-name>
         <url-pattern>/oauthServlet</url-pattern>
-    </servlet-mapping>-->
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.gif</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.jpg</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.png</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
+
 </web-app>
