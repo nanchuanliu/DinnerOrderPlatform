@@ -19,6 +19,12 @@
             color: green;
             font-weight: bold;
         }
+
+        .image{
+            width:200px;
+            height: 100px;
+            float: right;
+        }
     </style>
 </head>
 <body>
@@ -45,7 +51,9 @@
                             <div class="item-title">剁椒鱼头</div>
                             <div class="item-subtitle">¥66.00/份</div>
                         </div>
+                        <img src="image/djyt.jpg" class="image">
                     </label>
+
                 </li>
                 <li>
                     <label class="label-checkbox item-content">
@@ -57,6 +65,7 @@
                             <div class="item-title">回锅肉</div>
                             <div class="item-subtitle">¥28.00/份</div>
                         </div>
+                        <img src="image/hgr.jpg" class="image">
                     </label>
                 </li>
                 <li>
@@ -69,6 +78,7 @@
                             <div class="item-title">麻婆豆腐</div>
                             <div class="item-subtitle">¥18.00/份</div>
                         </div>
+                        <img src="image/mpdf.jpg" class="image">
                     </label>
                 </li>
             </ul>

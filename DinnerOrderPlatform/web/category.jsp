@@ -16,6 +16,24 @@
     <script>
 
     </script>
+    <style>
+
+        ul>li{
+            font-size: 50px;
+            padding:10px;
+        }
+
+        .list-group-title
+        {
+            font-size: 60px;
+            font-weight: bold;
+/*            margin: 10px;*/
+        }
+
+        ul{
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
 <div class="page">

@@ -21,7 +21,7 @@ public class ResourceFilter implements Filter {
         HttpServletResponse response=(HttpServletResponse)resp;
 
         String url=request.getRequestURI();
-        if(url.contains(".css") || url.contains("js"))
+        if(url.contains(".css") || url.contains(".js") || url.contains(".jpg"))
         {
             chain.doFilter(request,response);
         }
