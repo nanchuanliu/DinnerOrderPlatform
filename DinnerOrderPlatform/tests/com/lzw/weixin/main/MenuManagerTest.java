@@ -6,6 +6,7 @@ import com.lzw.weixin.Utils.CommonUtil;
 import com.lzw.weixin.Utils.DBUtility;
 import com.lzw.weixin.Utils.MenuUtil;
 import com.lzw.weixin.Utils.TokenUtil;
+import com.lzw.weixin.menu.Menu;
 import com.lzw.weixin.pojo.Token;
 import com.lzw.weixin.pojo.UserInfo;
 import org.junit.Test;
@@ -62,7 +63,7 @@ public class MenuManagerTest {
     public void testCreateMenu()
     {
         String token= TokenUtil.getToken().getAccessToken();
-        int result= MenuUtil.createMenu(MenuUtil.getMenu(),token);
+        int result= MenuUtil.createMenu(MenuUtil.getMenu());
 
         if(0==result)
         {
@@ -95,6 +96,13 @@ public class MenuManagerTest {
     {
         String source="http://35.185.149.208/oauthServlet/";
         System.out.println(CommonUtil.urlEncodeUTF8(source));
+    }
+
+    @Test
+    public void createMenu()
+    {
+        MenuUtil.deleteMenu();
+        MenuUtil.createMenu(MenuUtil.getMenu());
     }
 
 }

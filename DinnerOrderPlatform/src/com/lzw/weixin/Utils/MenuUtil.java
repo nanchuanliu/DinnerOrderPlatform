@@ -15,7 +15,7 @@ public class MenuUtil {
 
     public final static String menu_create_url="https://api.weixin.qq.com/cgi-bin/menu/create?access_token=%s";
 
-    public static int createMenu(Menu menu,String accessToken)
+    public static int createMenu(Menu menu)
     {
         int result=0;
         String url=String.format(menu_create_url,TokenUtil.getToken().getAccessToken());
@@ -37,19 +37,19 @@ public class MenuUtil {
     public static Menu getMenu()
     {
         ViewButton btn11=new ViewButton();
-        btn11.setName("点菜");
+        btn11.setName("订位");
         btn11.setType("view");
-        btn11.setUrl("http://35.185.149.208/ordermenu.jsp");
+        btn11.setUrl("http://35.185.149.208/orderseat.jsp");
 
-        CommonButton btn12=new CommonButton();
-        btn12.setName("公交查询");
-        btn12.setType("click");
-        btn12.setKey("12");
+        ViewButton btn12=new ViewButton();
+        btn12.setName("点菜");
+        btn12.setType("view");
+        btn12.setUrl("http://35.185.149.208/ordermenu.jsp");
 
-        CommonButton btn13=new CommonButton();
-        btn13.setName("周边搜索");
-        btn13.setType("click");
-        btn13.setKey("13");
+        ViewButton btn13=new ViewButton();
+        btn13.setName("天气查询");
+        btn13.setType("view");
+        btn13.setUrl("http://www.weather.com.cn/weather/101020100.shtml");
 
         CommonButton btn14=new CommonButton();
         btn14.setName("历史上的今天");
