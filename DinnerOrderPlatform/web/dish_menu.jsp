@@ -23,12 +23,21 @@
 </head>
 <body>
 <div class="page">
+
+    <header class="bar bar-nav">
+        <button class="button button-link button-nav pull-left">
+            <span class="icon icon-left"></span>
+            返回
+        </button>
+        <h1 class="title">点餐系统</h1>
+    </header>
+
     <div class="content">
         <div class="list-block media-list">
             <ul>
                 <li>
                     <label class="label-checkbox item-content">
-                        <input type="radio" name="my-radio">
+                        <input type="checkbox" name="my-radio">
                         <div class="item-media">
                             <i class="icon icon-form-checkbox"></i>
                         </div>
@@ -40,7 +49,7 @@
                 </li>
                 <li>
                     <label class="label-checkbox item-content">
-                        <input type="radio" name="my-radio">
+                        <input type="checkbox" name="my-radio">
                         <div class="item-media">
                             <i class="icon icon-form-checkbox"></i>
                         </div>
@@ -52,7 +61,7 @@
                 </li>
                 <li>
                     <label class="label-checkbox item-content">
-                        <input type="radio" name="my-radio">
+                        <input type="checkbox" name="my-radio">
                         <div class="item-media">
                             <i class="icon icon-form-checkbox"></i>
                         </div>
