@@ -20,6 +20,11 @@ public class CoreServlet extends javax.servlet.http.HttpServlet {
         String nonce = request.getParameter("nonce");
         String echostr = request.getParameter("echostr");
 
+        System.out.println("signature:"+signature);
+        System.out.println("timestamp"+timestamp);
+        System.out.println("nonce"+nonce);
+        System.out.println("echostr"+echostr);
+
         PrintWriter out = response.getWriter();
         if(SignUtil.checkSignature(signature,timestamp,nonce))
         {

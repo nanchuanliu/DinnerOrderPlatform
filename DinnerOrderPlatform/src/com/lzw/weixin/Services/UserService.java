@@ -63,9 +63,8 @@ public class UserService {
     public static Oauth2Token getOauth2AccessToken(String appID, String appsecret, String code) {
         Oauth2Token token = null;
         String requestUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code";
-
         requestUrl = String.format(requestUrl, appID, appsecret, code);
-        System.out.println(requestUrl);
+
         JSONObject jsonObject = CommonUtil.httpsRequest(requestUrl, "GET", null);
 
         try {
@@ -92,7 +91,6 @@ public class UserService {
         String requestUrl = "https://api.weixin.qq.com/sns/userinfo?access_token=%s&openid=%s";
 
         requestUrl = String.format(requestUrl, accessToken, openId);
-
         JSONObject jsonObject = CommonUtil.httpsRequest(requestUrl, "GET", null);
 
         if (null != jsonObject) {
@@ -110,11 +108,9 @@ public class UserService {
                 int errCode = jsonObject.getInt("errcode");
                 String errMsg = jsonObject.getString("errmsg");
                 log.error("获取用户信息失败 errcode：{}  errmsg：{}", errCode, errMsg);
-
             }
         }
 
         return info;
     }
-
 }

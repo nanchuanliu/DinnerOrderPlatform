@@ -9,11 +9,11 @@
 <html>
 <head>
     <title>美食餐厅</title>
-    <link rel="stylesheet" href="css/light7/light7.css"/>
-    <link rel="stylesheet" href="css/light7-swiper.css"/>
-    <script type="text/javascript" src="js/jquery/jquery.js"></script>
-    <script type="text/javascript" src="js/light7/light7.js"></script>
-    <script type="text/javascript" src="js/light7/light7-swiper.js"></script>
+    <link rel="stylesheet" href="css/light7/light7.min.css"/>
+    <link rel="stylesheet" href="css/light7-swiper.min.css"/>
+    <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="js/light7/light7.min.js"></script>
+    <script type="text/javascript" src="js/light7/light7-swiper.min.js"></script>
     <script type="text/javascript" src="js/jquery/jquery.fly.min.js"></script>
 
     <script type="text/javascript">

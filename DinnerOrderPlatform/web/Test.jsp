@@ -1,4 +1,7 @@
-<%--
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="com.lzw.weixin.Utils.CommonUtil" %>
+<%@ page import="com.lzw.weixin.main.Sign" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2017/6/25
@@ -9,36 +12,51 @@
 <html>
 <head>
     <title>Title</title>
-    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <link href="css/light7/light7.css" rel="stylesheet"/>
+    <script type="text/javascript" src="js/jquery/jquery.js" ></script>
+    <script type="text/javascript" src="js/light7/light7.js"></script>
     <script type="text/javascript">
-        wx.config({
-            debug:false,
-            appId:'${appId}',
-            timestamp:'${timestamp}',
-            nonceStr:'${nonceStr}',
-            signature:'${signature}',
-            jsApiList:['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','onMenuShareQZone']
-        });
 
-        wx.ready(function(){
-            wx.onMenuShareTimeline({
-                title:'测试文章',
-                link:"",
-                imgUrl:""
+        $(function () {
+            var url="http://api.map.baidu.com/geocoder/v2/?location=31.23145,121.360045&output=json&ak=48cgBuyrEDEkOnGiPi8rpFDo8Do5vo9w";
+            $.ajax({
+                type:"GET",
+                url:url,
+                dataType:"JSONP",
+                success:function (data) {
+                    var comp=data.result.addressComponent;
+                    var province=comp.province;
+                    var city=comp.city;
+                    var district=comp.district;
+                    var street=comp.street;
+                    var street_number=comp.street_number;
+
+                }
             });
 
-            wx.onMenuShareAppMessage({
-                title:"分享朋友圈",
-                desc:"朋友圈",
-                link:"",
-                type:"link"
+            $("#picker").picker({
+                toolbarTemplate: '<header class="bar bar-nav">\
+  <button class="button button-link pull-left">按钮</button>\
+  <button class="button button-link pull-right close-picker">确定</button>\
+  <h1 class="title">标题</h1>\
+  </header>',
+                cols: [
+                    {
+                        textAlign: 'center',
+                        values: ['iPhone 4', 'iPhone 4S', 'iPhone 5', 'iPhone 5S', 'iPhone 6', 'iPhone 6 Plus', 'iPad 2', 'iPad Retina', 'iPad Air', 'iPad mini', 'iPad mini 2', 'iPad mini 3']
+                    }
+                ],
+                convertToPopover:false
             });
+        })
 
-
-        });
     </script>
 </head>
 <body>
-    测试
+<div class="page pageInit">
+<input type="text" id='picker'/></div>
+<script>
+
+</script>
 </body>
 </html>

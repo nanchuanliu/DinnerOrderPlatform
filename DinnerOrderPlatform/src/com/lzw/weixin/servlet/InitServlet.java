@@ -19,11 +19,14 @@ public class InitServlet extends HttpServlet {
 
     private static final long serialVersionUID=1L;
     private static Logger log= LoggerFactory.getLogger(InitServlet.class);
+    public static String baiduApiKey="";
 
     public void init()
     {
         TokenThread.appID=getInitParameter("appID");
         TokenThread.appsecret=getInitParameter("appsecret");
+
+        baiduApiKey=getInitParameter("BaiduApiKey");
 
         if("".equals(TokenThread.appID) || "".equals(TokenThread.appsecret))
         {

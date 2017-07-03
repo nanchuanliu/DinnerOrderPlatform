@@ -49,7 +49,8 @@ public class CoreService {
                 respContent = "您发送的是链接消息！";
             } else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)) {
                 String eventType = requestMap.get("Event");
-                System.out.println(eventType);
+                String eventKey=requestMap.get("EventKey");
+
                 if (eventType.equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) {
                     respContent = "谢谢您的关注！";
                 } else if (eventType.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {
@@ -59,7 +60,15 @@ public class CoreService {
                 } else if (eventType.equals(MessageUtil.EVENT_TYPE_LOCATION)) {
 
                 } else if (eventType.equals(MessageUtil.EVENT_TYPE_CLICK)) {
-                    respContent="谢谢点击<a href=\"http://35.185.149.208/Test.jsp>\">www</a>！";
+                    String keyName="";
+                    switch (eventKey)
+                    {
+                        case "14":
+                            keyName="叫号查询";
+                            break;
+                    }
+
+                    respContent="新功能"+keyName+"开发中！敬请期待！";
                 }
             }
 

@@ -2,9 +2,11 @@ package com.lzw.weixin.servlet;
 
 import com.lzw.weixin.Services.TokenThread;
 import com.lzw.weixin.Services.UserService;
+import com.lzw.weixin.Utils.CommonUtil;
 import com.lzw.weixin.Utils.TokenUtil;
 import com.lzw.weixin.pojo.Oauth2Token;
 import com.lzw.weixin.pojo.SNSUserInfo;
+import com.lzw.weixin.pojo.Token;
 import com.sun.glass.ui.TouchInputSupport;
 
 import javax.servlet.ServletException;
@@ -27,13 +29,14 @@ public class OAuthServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        request.setCharacterEncoding("UTF-8");
+        String uri=request.getParameter("url");
+        request.setCharacterEncoding("GB2312");
         response.setCharacterEncoding("UTF-8");
 
         String code=request.getParameter("code");
         String state=request.getParameter("state");
 
-        if(!"authdeny".equals(code))
+        if(code!=null && !"authdeny".equals(code))
         {
             Oauth2Token token= UserService.getOauth2AccessToken(TokenThread.appID,TokenThread.appsecret,code);
             String accessToken=token.getAccessToken();
@@ -42,9 +45,11 @@ public class OAuthServlet extends HttpServlet {
 
             request.setAttribute("snsUserInfo",info);
             request.setAttribute("state",state);
+
         }
 
-        request.getRequestDispatcher("index.jsp").forward(request,response);
+        request.getRequestDispatcher(uri).forward(request,response);
 
     }
+
 }

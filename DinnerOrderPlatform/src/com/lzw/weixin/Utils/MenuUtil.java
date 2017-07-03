@@ -1,9 +1,13 @@
 package com.lzw.weixin.Utils;
 
+import com.lzw.weixin.Services.TokenThread;
 import com.lzw.weixin.menu.*;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  * Description:
@@ -34,79 +38,84 @@ public class MenuUtil {
     }
 
 
-    public static Menu getMenu()
+    public static Menu getMenu(String appId)
     {
         ViewButton btn11=new ViewButton();
         btn11.setName("订位");
         btn11.setType("view");
-        btn11.setUrl("http://35.185.149.208/orderseat.jsp");
+        btn11.setUrl("http://mylife.51vip.biz/restaurantlist.jsp");
 
         ViewButton btn12=new ViewButton();
         btn12.setName("点菜");
         btn12.setType("view");
-        btn12.setUrl("http://35.185.149.208/ordermenu.jsp");
+        btn12.setUrl("http://mylife.51vip.biz/ordermenu.jsp");
 
         ViewButton btn13=new ViewButton();
-        btn13.setName("天气查询");
+        btn13.setName("店内服务");
         btn13.setType("view");
-        btn13.setUrl("http://www.weather.com.cn/weather/101020100.shtml");
+        btn13.setUrl("http://mylife.51vip.biz/service.jsp");
 
         CommonButton btn14=new CommonButton();
-        btn14.setName("历史上的今天");
+        btn14.setName("叫号查询");
         btn14.setType("click");
         btn14.setKey("14");
 
         CommonButton btn21=new CommonButton();
-        btn21.setName("歌曲点播");
+        btn21.setName("订位单");
         btn21.setType("click");
         btn21.setKey("21");
 
         CommonButton btn22=new CommonButton();
-        btn22.setName("经典游戏");
+        btn22.setName("我的菜单");
         btn22.setType("click");
         btn22.setKey("22");
 
         CommonButton btn23=new CommonButton();
-        btn23.setName("广播电台");
+        btn23.setName("我的账单");
         btn23.setType("click");
         btn23.setKey("23");
 
         CommonButton btn24=new CommonButton();
-        btn24.setName("人脸识别");
+        btn24.setName("券包");
         btn24.setType("click");
         btn24.setKey("24");
 
         CommonButton btn25=new CommonButton();
-        btn25.setName("聊天唠嗑");
+        btn25.setName("会员卡");
         btn25.setType("click");
         btn25.setKey("25");
 
-        CommonButton btn31=new CommonButton();
-        btn31.setName("Q友圈");
-        btn31.setType("click");
-        btn31.setKey("31");
+        ViewButton btn31=new ViewButton();
+        btn31.setName("特色推荐");
+        btn31.setType("view");
+        btn31.setUrl("http://mylife.51vip.biz/recommend.jsp");
 
-        CommonButton btn32=new CommonButton();
-        btn32.setName("电影排行榜");
-        btn32.setType("click");
-        btn32.setKey("32");
+        ViewButton btn32=new ViewButton();
+        btn32.setName("周边服务");
+        btn32.setType("view");
+        btn32.setUrl("http://mylife.51vip.biz/periphery.jsp");
 
         CommonButton btn33=new CommonButton();
-        btn33.setName("幽默笑话");
+        btn33.setName("好友分享");
         btn33.setType("click");
         btn33.setKey("33");
 
+        CommonButton btn34=new CommonButton();
+        btn34.setName("美文赏析");
+        btn34.setType("click");
+        btn34.setKey("33");
+
         ComplexButton mainBtn1=new ComplexButton();
-        mainBtn1.setName("生活助手");
+        mainBtn1.setName("服务");
         mainBtn1.setSub_button(new Button[]{btn11,btn12,btn13,btn14});
 
         ComplexButton mainBtn2=new ComplexButton();
-        mainBtn2.setName("休闲驿站");
+        mainBtn2.setName("我的");
         mainBtn2.setSub_button(new Button[]{btn21,btn22,btn23,btn24,btn25});
 
         ComplexButton mainBtn3=new ComplexButton();
         mainBtn3.setName("更多体验");
-        mainBtn3.setSub_button(new Button[]{btn31,btn32,btn33});
+        mainBtn3.setSub_button(new Button[]{btn31,btn32,btn33,btn34});
 
         Menu menu=new Menu();
         menu.setButton(new Button[]{mainBtn1,mainBtn2,mainBtn3});

@@ -1,5 +1,6 @@
 package com.lzw.weixin.main;
 
+import com.lzw.weixin.Services.TokenThread;
 import com.lzw.weixin.Services.UserService;
 import com.lzw.weixin.Test.TestClass;
 import com.lzw.weixin.Utils.CommonUtil;
@@ -12,7 +13,9 @@ import com.lzw.weixin.pojo.UserInfo;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.nio.cs.ISO_8859_2;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 
 import static org.junit.Assert.*;
@@ -63,7 +66,7 @@ public class MenuManagerTest {
     public void testCreateMenu()
     {
         String token= TokenUtil.getToken().getAccessToken();
-        int result= MenuUtil.createMenu(MenuUtil.getMenu());
+        int result= MenuUtil.createMenu(MenuUtil.getMenu(TokenThread.appID));
 
         if(0==result)
         {
@@ -98,11 +101,18 @@ public class MenuManagerTest {
         System.out.println(CommonUtil.urlEncodeUTF8(source));
     }
 
+
     @Test
     public void createMenu()
     {
         MenuUtil.deleteMenu();
-        MenuUtil.createMenu(MenuUtil.getMenu());
+        MenuUtil.createMenu(MenuUtil.getMenu("wx2d080b58edae0b82"));
+    }
+
+    @Test
+    public void searchMenu()
+    {
+        MenuUtil.searchMenu();
     }
 
 }

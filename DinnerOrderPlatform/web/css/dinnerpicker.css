@@ -1,0 +1,30 @@
+.picker-columns {
+    height: 50%;
+}
+
+.bar+.picker-items
+{
+    height:100%;
+}
+
+.picker-item
+{
+    height:60px;
+    line-height:60px;
+    font-size: 40px;
+}
+
+.picker-center-highlight{
+    height: 60px;
+    margin-top:-30px;
+}
+
+.picker-modal .bar
+{
+    height: 60px;
+}
+
+.picker-modal .bar>*
+{
+    font-size: 40px;
+}

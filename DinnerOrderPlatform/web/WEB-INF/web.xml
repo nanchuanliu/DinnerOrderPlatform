@@ -4,6 +4,22 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+    <servlet>
+        <servlet-name>oauthServlet</servlet-name>
+        <servlet-class>com.lzw.weixin.servlet.OAuthServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>oauthServlet</servlet-name>
+        <url-pattern>/oauth</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>oauthRedirectServlet</servlet-name>
+        <servlet-class>com.lzw.weixin.servlet.OAuthRedirectServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>oauthRedirectServlet</servlet-name>
+        <url-pattern>/oauthRedirect</url-pattern>
+    </servlet-mapping>
     <filter>
         <filter-name>ResourceFilter</filter-name>
         <filter-class>com.lzw.weixin.servlet.Filter.ResourceFilter</filter-class>
@@ -33,16 +49,12 @@
             <param-name>appsecret</param-name>
             <param-value>044c3518a9877adfba62382dc738667f</param-value>
         </init-param>
+        <init-param>
+            <param-name>BaiduApiKey</param-name>
+            <param-value>48cgBuyrEDEkOnGiPi8rpFDo8Do5vo9w</param-value>
+        </init-param>
         <load-on-startup>0</load-on-startup>
     </servlet>
-    <servlet>
-        <servlet-name>oauthServlet</servlet-name>
-        <servlet-class>com.lzw.weixin.servlet.OAuthServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>oauthServlet</servlet-name>
-        <url-pattern>/oauthServlet</url-pattern>
-    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>default</servlet-name>

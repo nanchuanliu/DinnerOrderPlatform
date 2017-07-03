@@ -2,6 +2,7 @@ package com.lzw.weixin.Utils;
 
 import com.lzw.weixin.Services.TokenThread;
 import com.lzw.weixin.pojo.Token;
+import com.sun.deploy.net.HttpRequest;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
@@ -61,7 +62,7 @@ public class CommonUtil {
             }
 
             InputStream stream = httpUrlConn.getInputStream();
-            InputStreamReader inputStreamReader = new InputStreamReader(stream, "GB2312");
+            InputStreamReader inputStreamReader = new InputStreamReader(stream,"UTF-8");
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
             StringBuffer buffer = new StringBuffer();
@@ -74,12 +75,16 @@ public class CommonUtil {
             inputStreamReader.close();
             stream.close();
             httpUrlConn.disconnect();
+
             jsonObject = JSONObject.fromObject(buffer.toString());
         } catch (ConnectException e) {
             log.error("连接超时：{}", e);
         } catch (Exception e) {
             log.error("https请求异常：{}", e);
         }
+
+        log.debug(jsonObject.toString());
+        System.out.println(jsonObject.toString());
 
         return jsonObject;
     }
@@ -112,7 +117,6 @@ public class CommonUtil {
         String requestUrl=request.getRequestURL().toString();
         String access_token=TokenUtil.getToken().getAccessToken();
         String jsapi_ticket="";
-
         String timestamp=Long.toString(System.currentTimeMillis()/1000);
         String nonceStr= UUID.randomUUID().toString();
 
@@ -123,6 +127,9 @@ public class CommonUtil {
 
         String signature="";
         String sign="jsapi_ticket="+jsapi_ticket+"&noncestr="+nonceStr+"&timestamp="+timestamp+"&url="+requestUrl;
+
+        System.out.println("sign:"+sign);
+        log.debug("sign:"+sign);
 
         try {
             MessageDigest digest=MessageDigest.getInstance("SHA-1");
@@ -154,5 +161,13 @@ public class CommonUtil {
         }
         return result;
 
+    }
+
+    public static String getRequestDomain(HttpServletRequest request)
+    {
+        StringBuffer url =request.getRequestURL() ;
+        String uri=request.getRequestURI();
+        String domain = url.delete(url.length() - uri.length(), url.length()).append("/").toString();
+        return domain;
     }
 }
