@@ -6,22 +6,15 @@
     android:layout_height="match_parent"
     tools:context="com.lzw.order.dinnerorderapp.MainActivity">
 
-    <com.lzw.order.dinnerorderapp.component.ScrollViewPager
-        android:id="@+id/vpBanner"
-        android:layout_width="match_parent"
-
-        android:layout_height="200dp"></com.lzw.order.dinnerorderapp.component.ScrollViewPager>
-
     <com.roughike.bottombar.BottomBar
         android:id="@+id/bottomBar"
-
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         app:bb_tabXmlResource="@xml/bottombar_tabs" />
-        <LinearLayout
-            android:orientation="horizontal"
-            android:id="@+id/indicatorLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
 </RelativeLayout>
