@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ff5555</color>
+    <!--<color name="colorPrimary">#ff5555</color>-->
+    <color name="colorPrimary">#0085ff</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorContent">#888888</color>
+    <color name="colorLight">@android:color/white</color>
+
+    <!--SVG颜色-->
+    <color name="colorSVGBack">@android:color/transparent</color>
+    <color name="colorSVGFore">@android:color/white</color>
 </resources>

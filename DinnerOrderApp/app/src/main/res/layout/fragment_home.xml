@@ -4,6 +4,70 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:padding="5dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/imgLocation"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_si_glyph_pin_location" />
+
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="长宁区"
+            android:textColor="@color/colorLight"
+            android:textSize="16dp" />
+
+        <ImageButton
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_si_glyph_triangle_down" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right">
+                <TextView
+                    android:id="@+id/tvTemp"
+                    android:textSize="13dp"
+                    android:textColor="@color/colorLight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:text="28℃"/>
+                <TextView
+                    android:id="@+id/tvWeather"
+                    android:textSize="13dp"
+                    android:textColor="@color/colorLight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:text="中雨"/>
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/imgWeather"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
     <com.lzw.order.dinnerorderapp.library.TabPageIndicator
         android:id="@+id/vpi_indicator"
         android:layout_width="match_parent"
