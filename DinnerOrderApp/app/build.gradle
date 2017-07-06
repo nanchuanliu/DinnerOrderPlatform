@@ -32,6 +32,7 @@ dependencies {
      compile 'com.google.dagger:dagger:2.5'
      compile 'com.google.dagger:dagger-compiler:2.5'*/
 
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
@@ -43,6 +44,5 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.paolorotolo:appintro:3.4.0'
     compile 'com.android.support:support-v4:24.2.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 }
