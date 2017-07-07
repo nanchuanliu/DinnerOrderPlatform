@@ -1,5 +1,6 @@
 package com.lzw.order.dinnerorderapp.services;
 
+import com.lzw.order.dinnerorderapp.Bean.HotSearchWord;
 import com.lzw.order.dinnerorderapp.Bean.LocationInfo;
 import com.lzw.order.dinnerorderapp.Bean.WeatherInfo;
 
@@ -21,4 +22,7 @@ public interface DataService {
 
     @GET("bgs/weather/current")
     Observable<WeatherInfo> getWeather(@Query("latitude") String latitude,@Query("longitude") String longitude);
+
+    @GET("shopping/v3/hot_search_words")
+    Observable<List<HotSearchWord>> getHotSearchWords(@Query("latitude") String latitude, @Query("longitude") String longitude);
 }

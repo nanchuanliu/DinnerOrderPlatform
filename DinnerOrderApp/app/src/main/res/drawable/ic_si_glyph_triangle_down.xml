@@ -1,6 +1,6 @@
 <vector android:height="24dp" android:viewportHeight="16.0"
     android:viewportWidth="17.0" android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
-    <path android:fillColor="@color/colorSVGFore"
+    <path android:fillColor="#ffffff"
         android:pathData="M10.106,12.69C9.525,13.27 8.584,13.27 8.002,12.69L1.561,6.246C0.979,5.665 0.722,4.143 2.561,4.143L15.549,4.143C17.45,4.143 17.131,5.664 16.549,6.246L10.106,12.69L10.106,12.69Z"
-        android:strokeColor="@color/colorSVGBack" android:strokeWidth="1"/>
+        android:strokeColor="#00ffffff" android:strokeWidth="1"/>
 </vector>

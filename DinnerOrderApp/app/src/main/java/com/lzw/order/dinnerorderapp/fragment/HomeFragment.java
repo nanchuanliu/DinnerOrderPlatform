@@ -62,38 +62,6 @@ public class HomeFragment extends Fragment  {
         ImageView imageView=(ImageView)view.findViewById(R.id.imgLocation);
         imageView.setImageDrawable(compat);*/
 
-        final TextView tvTemp = (TextView) view.findViewById(R.id.tvTemp);
-        final TextView tvWeather = (TextView) view.findViewById(R.id.tvWeather);
-        final ImageView imgView=(ImageView)view.findViewById(R.id.imgWeather);
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(UrlUtil.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-
-        DataService service = retrofit.create(DataService.class);
-        service.getWeather("31.218254", "121.359278")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<WeatherInfo>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onNext(WeatherInfo info) {
-                        tvTemp.setText(info.getTemperature()+"℃");
-                        tvWeather.setText(info.getDescription());
-                        String path=info.getImage_hash();
-                        String url=UrlUtil.getImageUrlFromPath(path);
-                        Picasso.with(getContext()).load(url).into(imgView);
-                    }
-                });
         return view;
     }
 
