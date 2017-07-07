@@ -6,6 +6,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorContent">#888888</color>
     <color name="colorLight">@android:color/white</color>
+    <color name="colorBack">#eeeeee</color>
+    <color name="colorDark">#666666</color>
 
     <!--SVG颜色-->
     <color name="colorSVGBack">@android:color/transparent</color>

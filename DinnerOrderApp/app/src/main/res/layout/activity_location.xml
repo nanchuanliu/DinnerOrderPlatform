@@ -17,6 +17,7 @@
         android:paddingRight="10dp">
 
         <ImageButton
+            android:id="@+id/btnReturn"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
@@ -36,18 +37,23 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/colorPrimary"
+        android:layout_height="50dp"
         android:layout_gravity="center_vertical"
+        android:background="@color/colorPrimary"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
+
+        <LinearLayout
+            android:id="@+id/lineCity"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/tvCurCity"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:text="上海"
+                android:text="定位中"
                 android:textColor="@color/colorLight"
                 android:textSize="16dp" />
 
@@ -55,36 +61,104 @@
                 android:layout_width="13dp"
                 android:layout_height="13dp"
                 android:layout_gravity="top"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="6dp"
-                android:layout_marginLeft="10dp"
                 android:background="@drawable/ic_si_glyph_triangle_down" />
+        </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/layoutSearch"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
+        <LinearLayout
+            android:id="@+id/layoutSearch"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/colorLight"
+            android:gravity="center"
+            android:padding="3dp">
+
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/colorLight"
-                android:gravity="center"
-                android:padding="3dp">
+                android:alpha="0.8"
+                android:background="@android:color/transparent"
+                android:rotation="-90"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_si_glyph_magnifier" />
 
-                <ImageButton
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:alpha="0.8"
-                    android:background="@android:color/transparent"
-                    android:rotation="-90"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_si_glyph_magnifier" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="搜索商家、商家名称"
-                    android:textColor="@color/colorContent" />
-            </LinearLayout>
+            <EditText
+                android:id="@+id/etSearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:hint="请输入地址"
+                android:textColor="@color/colorContent"
+                android:textColorHint="@color/colorContent" />
+        </LinearLayout>
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0.6"
+        android:background="@color/colorBack"
+        android:padding="10dp"
+        android:text="当前地址"
+        android:textColor="@color/colorContent"
+        android:textSize="13dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tvCurAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="当前位置"
+            android:textSize="18dp" />
+
+        <LinearLayout
+            android:id="@+id/lineRefreshLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgLocation"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp"
+                android:src="@android:drawable/ic_menu_mylocation" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="重新定位"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0.6"
+        android:background="@color/colorBack"
+        android:padding="10dp"
+        android:text="附近地址"
+        android:textColor="@color/colorContent"
+        android:textSize="13dp" />
+
+    <ListView
+        android:id="@+id/lvNearAddress"
+        android:foreground="@android:color/black"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"></ListView>
 </LinearLayout>

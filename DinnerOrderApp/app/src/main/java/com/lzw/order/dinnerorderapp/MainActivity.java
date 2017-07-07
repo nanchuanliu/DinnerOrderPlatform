@@ -40,6 +40,10 @@ import rx.schedulers.Schedulers;
 public class MainActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView tvLocation;
+    private String curAddr;
+    private float latitude;
+    private float longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 /*
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
+
+        tvLocation=(TextView)findViewById(R.id.tvLocation);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=new Intent();
                 intent.setClass(getApplicationContext(),LocationActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
 
@@ -106,6 +112,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1 && resultCode==RESULT_OK)
+        {
+            Bundle bundle=data.getExtras();
+            curAddr=bundle.getString("name");
+            latitude=bundle.getFloat("latitude");
+            longitude=bundle.getFloat("longitude");
+
+            tvLocation.setText(curAddr);
+        }
+    }
 
     /**
      * 首次启动欢迎界面
