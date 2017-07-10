@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private float latitude;
     private float longitude;
     private Location curLocation;
+    private boolean isLoading=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +82,21 @@ public class MainActivity extends AppCompatActivity {
         checkFirstStart();
 
         FragmentManager manager = getSupportFragmentManager();
-        HomeFragment homeFrag = new HomeFragment(getApplicationContext(),manager,swipeRefreshLayout,curLocation);
+        final HomeFragment homeFrag = new HomeFragment(getApplicationContext(),manager,swipeRefreshLayout,curLocation);
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.fragment_container, homeFrag, "HomeFragment");
         transaction.commit();
+
+        NestedScrollView nestedScrollView=(NestedScrollView)findViewById(R.id.nestHome);
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if(scrollY==(v.getChildAt(0).getMeasuredHeight()-v.getMeasuredHeight()))
+                {
+                    homeFrag.loadMoreShopList();
+                }
+            }
+        });
 
         loadWeatherByLocation();
         refreshSearchWords();

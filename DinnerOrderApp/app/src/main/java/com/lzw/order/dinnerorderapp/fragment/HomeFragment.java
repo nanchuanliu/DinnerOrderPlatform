@@ -47,7 +47,9 @@ public class HomeFragment extends Fragment {
     private FragmentManager fragmentManager;
     private SwipeRefreshLayout refreshLayout;
     private Context context;
-    private LinearLayoutManager layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,true);
+    private ShopListRecyclerAdapter shopListAdapter;
+    private boolean isLoading = false;
+    private LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true);
 
     public HomeFragment() {
         super();
@@ -55,9 +57,9 @@ public class HomeFragment extends Fragment {
 
     public HomeFragment(Context context, FragmentManager fm, SwipeRefreshLayout layout, Location loc) {
         this();
-        this.context=context;
+        this.context = context;
         fragmentManager = fm;
-        refreshLayout=layout;
+        refreshLayout = layout;
         curLocation = loc;
     }
 
@@ -82,8 +84,8 @@ public class HomeFragment extends Fragment {
 
 
         ScrollViewPager vpFoodEntry = (ScrollViewPager) view.findViewById(R.id.vpFoodEntry);
-        FoodPagerAdapter adapter = new FoodPagerAdapter(this.getActivity(), UrlUtil.listFoodName);
-        vpFoodEntry.setAdapter(adapter);
+        FoodPagerAdapter foodEntryAdapter = new FoodPagerAdapter(this.getActivity(), UrlUtil.listFoodName);
+        vpFoodEntry.setAdapter(foodEntryAdapter);
 
         LinearLayout layout = (LinearLayout) view.findViewById(R.id.indicatorLayout);
         vpFoodEntry.setOnPageChangeListener(new ScrollViewIndicator(this.getActivity(), vpFoodEntry, layout, 2));
@@ -95,12 +97,16 @@ public class HomeFragment extends Fragment {
 
     private void initRecycleList(View view) {
         rvShopList = (RecyclerView) view.findViewById(R.id.rvShopList);
+
         layoutManager.setAutoMeasureEnabled(true);
         rvShopList.setLayoutManager(layoutManager);
         rvShopList.setHasFixedSize(true);
         rvShopList.setNestedScrollingEnabled(false);
 
-        refreshShopList(curLocation.getLatitude(), curLocation.getLongitude(), 0, 20);
+        shopListAdapter = new ShopListRecyclerAdapter(fragmentManager, getContext());
+        rvShopList.setAdapter(shopListAdapter);
+
+        refreshShopList(curLocation.getLatitude(), curLocation.getLongitude(), 0, limit);
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         rvShopList.setLayoutManager(layoutManager);
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
@@ -108,7 +114,14 @@ public class HomeFragment extends Fragment {
         rvShopList.setItemAnimator(new DefaultItemAnimator());
     }
 
-    private void refreshShopList(double latitude, double longitude, int offset, int limit) {
+    public void loadMoreShopList() {
+        if (isLoading)
+            return;
+        isLoading = true;
+        refreshShopList(curLocation.getLatitude(), curLocation.getLongitude(), lastListItemIndex, limit);
+    }
+
+    private void refreshShopList(double latitude, double longitude, int offset, final int limit) {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(UrlUtil.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -131,9 +144,11 @@ public class HomeFragment extends Fragment {
 
                     @Override
                     public void onNext(List<ShopInfo> shopInfo) {
-                        final RecyclerView.Adapter adapter = new ShopListRecyclerAdapter(fragmentManager, getContext(), shopInfo);
-                        rvShopList.setAdapter(adapter);
-                        rvShopList.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                        shopListAdapter.addDatas(shopInfo, lastListItemIndex);
+                        rvShopList.smoothScrollToPosition(lastListItemIndex);
+                        lastListItemIndex += limit;
+                        isLoading = false;
+/*                        rvShopList.setOnScrollListener(new RecyclerView.OnScrollListener() {
                             @Override
                             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                                 super.onScrollStateChanged(recyclerView, newState);
@@ -146,15 +161,14 @@ public class HomeFragment extends Fragment {
                             @Override
                             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                                 super.onScrolled(recyclerView, dx, dy);
-                                lastListItemIndex=layoutManager.findLastVisibleItemPosition();
+                                //lastListItemIndex=layoutManager.findLastVisibleItemPosition();
                             }
-                        });
-                        };
-
+                        });*/
+                    }
                 });
     }
 
-    private int lastListItemIndex=20;
-
+    private int lastListItemIndex = 0;
+    private int limit = 10;
 
 }
