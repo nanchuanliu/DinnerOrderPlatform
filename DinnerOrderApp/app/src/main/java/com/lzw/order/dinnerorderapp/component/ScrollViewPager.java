@@ -35,7 +35,7 @@ public class ScrollViewPager extends ViewPager  {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                handler.sendEmptyMessage(0);
+              //  handler.sendEmptyMessage(0);
             }
         },delay,delay);
     }

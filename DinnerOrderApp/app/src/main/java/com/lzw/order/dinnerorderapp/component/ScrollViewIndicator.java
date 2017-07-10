@@ -66,7 +66,7 @@ public class ScrollViewIndicator  implements ViewPager.OnPageChangeListener {
             LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(
                     new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-            params.rightMargin=30;
+            params.rightMargin=10;
             if(i>0)
             {
                 imageView.setEnabled(false);

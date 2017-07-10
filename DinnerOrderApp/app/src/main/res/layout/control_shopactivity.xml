@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="1dp"
+    android:paddingBottom="1dp">
+    <TextView
+        android:id="@+id/tvActivityIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="新"
+        android:textSize="10dp"
+        android:layout_gravity="center"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:paddingBottom="2dp"
+        android:background="@drawable/txt_shape"
+        android:textColor="@color/colorLight"
+        />
+    <TextView
+        android:id="@+id/tvActivityTip"
+        android:textColor="@color/colorContent"
+        android:textSize="10dp"
+        android:text="新用户下单立减17.0元"
+        android:layout_marginLeft="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>

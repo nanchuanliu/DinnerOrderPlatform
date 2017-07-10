@@ -157,8 +157,9 @@
 
     <ListView
         android:id="@+id/lvNearAddress"
-        android:foreground="@android:color/black"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"></ListView>
+        android:foreground="@android:color/black"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"></ListView>
 </LinearLayout>

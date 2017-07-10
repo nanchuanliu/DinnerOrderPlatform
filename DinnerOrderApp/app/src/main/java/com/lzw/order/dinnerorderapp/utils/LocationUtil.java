@@ -11,6 +11,8 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 
+import com.lzw.order.dinnerorderapp.Bean.LatLng;
+
 import static android.content.Context.LOCATION_SERVICE;
 
 /**
@@ -39,7 +41,7 @@ public class LocationUtil {
         }
     }
 
-    private Location getCurrentLocation(Activity activity) {
+    public static Location getCurrentLocation(Activity activity) {
         Context context=activity.getApplicationContext();
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -52,6 +54,12 @@ public class LocationUtil {
             location = locMgr.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         }
 
+        //GPS坐标转火星坐标
+        LatLng lat= CoordinateUtil.transform2Mars(location.getLatitude(),location.getLongitude());
+        location.setLatitude(lat.getLatitude());
+        location.setLongitude(lat.getLongitude());
+
         return location;
     }
+
 }
