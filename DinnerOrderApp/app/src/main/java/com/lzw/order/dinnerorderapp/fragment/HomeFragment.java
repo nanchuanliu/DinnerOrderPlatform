@@ -11,6 +11,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,7 +103,7 @@ public class HomeFragment extends Fragment {
         rvShopList.setLayoutManager(layoutManager);
         rvShopList.setHasFixedSize(true);
         rvShopList.setNestedScrollingEnabled(false);
-
+        ((SimpleItemAnimator)rvShopList.getItemAnimator()).setSupportsChangeAnimations(false);
         shopListAdapter = new ShopListRecyclerAdapter(fragmentManager, getContext());
         rvShopList.setAdapter(shopListAdapter);
 
@@ -169,6 +170,6 @@ public class HomeFragment extends Fragment {
     }
 
     private int lastListItemIndex = 0;
-    private int limit = 10;
+    private int limit = 20;
 
 }

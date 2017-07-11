@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if(scrollY==(v.getChildAt(0).getMeasuredHeight()-v.getMeasuredHeight()))
+                if(scrollY>(v.getChildAt(0).getMeasuredHeight()-v.getMeasuredHeight())-500)
                 {
                     homeFrag.loadMoreShopList();
                 }
