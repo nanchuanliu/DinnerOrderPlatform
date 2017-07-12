@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -66,8 +68,23 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
 
+        LocationManager locMgr = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (!locMgr.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivityForResult(intent,0);
+        }
+
         tvLocation = (TextView) findViewById(R.id.tvLocation);
         curLocation = LocationUtil.getCurrentLocation(this);
+
+        //默认东方明珠
+        if(curLocation==null)
+        {
+            curLocation=new Location(LocationManager.GPS_PROVIDER);
+            curLocation.setLatitude(31.2395176730);
+            curLocation.setLongitude(121.4997661114);
+        }
+
         getCurrentGeoInfo(curLocation);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -107,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(getApplicationContext(), LocationActivity.class);
+                intent.putExtra("curLocation",curLocation);
                 startActivityForResult(intent, 1);
             }
         });

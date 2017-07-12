@@ -61,6 +61,10 @@ public class LocationActivity extends Activity implements ActivityCompat.OnReque
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
+        Intent intent=getIntent();
+        Bundle bundle=intent.getExtras();
+        curLocation=(Location)bundle.get("curLocation");
+
         tvCurCity = (TextView) findViewById(R.id.tvCurCity);
         tvCurAddress = (TextView) findViewById(R.id.tvCurAddress);
 
@@ -88,11 +92,11 @@ public class LocationActivity extends Activity implements ActivityCompat.OnReque
                         && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
-                locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 200, 0, locationListener);
+                locMgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
             }
         });
 
-        curLocation = LocationUtil.getCurrentLocation(this);
+        //curLocation = LocationUtil.getCurrentLocation(this);
         refreshLocationInfo(curLocation);
 
         lvNearAddress = (ListView) findViewById(R.id.lvNearAddress);

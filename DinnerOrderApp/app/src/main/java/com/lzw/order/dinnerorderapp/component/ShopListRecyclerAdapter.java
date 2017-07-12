@@ -136,8 +136,8 @@ public class ShopListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
             //动态修改RatingBar的星星颜色，解决progressTint设置无效
             LayerDrawable ld_stars = (LayerDrawable) holder.rbRating.getProgressDrawable();
             //ld_stars.getDrawable(0).clearColorFilter();
-            ld_stars.getDrawable(1).setColorFilter(Color.parseColor("#ffaa0c"), PorterDuff.Mode.SRC_ATOP);
-            ld_stars.getDrawable(2).setColorFilter(Color.parseColor("#ffaa0c"), PorterDuff.Mode.SRC_ATOP);
+/*            ld_stars.getDrawable(1).setColorFilter(Color.parseColor("#eeeeee"), PorterDuff.Mode.SRC_ATOP);
+            ld_stars.getDrawable(2).setColorFilter(Color.parseColor("#ffaa0c"), PorterDuff.Mode.SRC_ATOP);*/
 
             holder.tvRating.setText(String.valueOf(info.getRating()));
             holder.tvMonthSales.setText("月售" + String.valueOf(info.getRecent_order_num()) + "单");
