@@ -10,119 +10,137 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
-
-        <LinearLayout
+        <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
-            app:layout_scrollFlags="scroll|enterAlways">
-
-            <LinearLayout
-                android:id="@+id/linePosition"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/imgLocation"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_si_glyph_pin_location" />
-
-                <TextView
-                    android:id="@+id/tvLocation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="长宁区"
-                    android:textColor="@color/colorLight"
-                    android:textSize="16dp" />
-
-                <ImageButton
-                    android:layout_width="13dp"
-                    android:layout_height="13dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/ic_si_glyph_triangle_down" />
-            </LinearLayout>
-
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right">
-
+                android:orientation="vertical"
+                app:layout_collapseMode="parallax"
+                >
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="3dp">
 
-                    <TextView
-                        android:id="@+id/tvTemp"
+                    <LinearLayout
+                        android:id="@+id/linePosition"
                         android:layout_width="wrap_content"
-                        android:layout_height="16dp"
-                        android:text="28℃"
-                        android:textColor="@color/colorLight"
-                        android:textSize="13dp" />
+                        android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/tvWeather"
-                        android:layout_width="wrap_content"
-                        android:layout_height="16dp"
-                        android:text="中雨"
-                        android:textColor="@color/colorLight"
-                        android:textSize="13dp" />
+                        <ImageView
+                            android:id="@+id/imgLocation"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_si_glyph_pin_location" />
+
+                        <TextView
+                            android:id="@+id/tvLocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="长宁区"
+                            android:textColor="@color/colorLight"
+                            android:textSize="16dp" />
+
+                        <ImageButton
+                            android:layout_width="13dp"
+                            android:layout_height="13dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:background="@drawable/ic_si_glyph_triangle_down" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvTemp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="13dp"
+                                android:text="28℃"
+                                android:textColor="@color/colorLight"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/tvWeather"
+                                android:layout_width="wrap_content"
+                                android:layout_height="13dp"
+                                android:text="中雨"
+                                android:textColor="@color/colorLight"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/imgWeather"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_marginLeft="6dp" />
+                    </LinearLayout>
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/imgWeather"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="10dp" />
+                <LinearLayout
+                    android:id="@+id/layoutSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@color/colorLight"
+                    android:gravity="left"
+                    android:padding="8dp">
+
+                    <ImageButton
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:alpha="0.8"
+                        android:background="@android:color/transparent"
+                        android:rotation="-90"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_si_glyph_magnifier" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="搜索商家、商家名称"
+                        android:textColor="@color/colorContent" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lineWords"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"></LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                >
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.CollapsingToolbarLayout>
 
-        <LinearLayout
-            android:id="@+id/layoutSearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/colorLight"
-            android:gravity="left"
-            android:padding="8dp">
-
-            <ImageButton
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:alpha="0.8"
-                android:background="@android:color/transparent"
-                android:rotation="-90"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_si_glyph_magnifier" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="搜索商家、商家名称"
-                android:textColor="@color/colorContent" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/lineWords"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_scrollFlags="scroll|enterAlways"></LinearLayout>
 
         <!--        <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -132,6 +150,7 @@
                     app:popupTheme="@style/AppTheme.PopupOverlay" />-->
 
     </android.support.design.widget.AppBarLayout>
+
     <!--
         <include layout="@layout/content_main3" />-->
 
@@ -159,7 +178,7 @@
 
     <com.roughike.bottombar.BottomBar
         android:id="@+id/bottomBar"
-        android:layout_width="20dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="bottom"
         app:bb_tabXmlResource="@xml/bottombar_tabs" />

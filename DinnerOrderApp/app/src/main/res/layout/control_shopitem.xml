@@ -73,10 +73,8 @@
                 android:layout_height="wrap_content"
                 android:numStars="5"
                 android:progressTint="#ffaa0c"
-                android:progressTintMode="screen"
                 android:rating="2.3"
-                android:secondaryProgressTint="@color/colorIndicatorE"
-                android:secondaryProgressTintMode="src_over"
+                android:secondaryProgressTint="#dddddd"
                 android:stepSize="0.1" />
 <!--            <LinearLayout
                 android:id="@+id/lineRatingBack"

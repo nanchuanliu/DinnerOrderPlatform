@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -63,24 +64,29 @@ public class ShopActivityFragment extends Fragment {
         TextView tvActivityNum = (TextView) view.findViewById(R.id.tvActivityNum);
         tvActivityNum.setText(activities.size() + "个活动");
 
-        LinearLayout lineShowHide = (LinearLayout) view.findViewById(R.id.lineShowHide);
-        lineShowHide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int count = lineActivities.getChildCount();
-                for (int i = 2; i < count; i++) {
-                    View sub = lineActivities.getChildAt(i);
-                    if (isHide) {
-                        sub.setVisibility(View.VISIBLE);
-                    } else {
-                        sub.setVisibility(View.GONE);
+        if (activities.size() <= 2) {
+            ImageButton btnShowHide = (ImageButton) view.findViewById(R.id.btnShowHide);
+            btnShowHide.setVisibility(View.GONE);
+        } else {
+            LinearLayout lineShowHide = (LinearLayout) view.findViewById(R.id.lineShowHide);
+            lineShowHide.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int count = lineActivities.getChildCount();
+                    for (int i = 2; i < count; i++) {
+                        View sub = lineActivities.getChildAt(i);
+                        if (isHide) {
+                            sub.setVisibility(View.VISIBLE);
+                        } else {
+                            sub.setVisibility(View.GONE);
+                        }
                     }
+
+                    isHide = !isHide;
+
                 }
-
-                isHide = !isHide;
-
-            }
-        });
+            });
+        }
 
         return view;
     }
