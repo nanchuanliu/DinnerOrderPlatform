@@ -181,10 +181,14 @@ public class ShopListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
 /*        BaseAdapter adapter=new ShopActivityAdapter(mContext,info.getActivities());
         holder.lvActivities.setAdapter(adapter);*/
 
-            ShopActivityFragment activityFrag = new ShopActivityFragment(mContext, info.getActivities());
-            FragmentTransaction transaction = manager.beginTransaction();
-            transaction.add(holder.fragmentActivities.getId(), activityFrag, "ActivitiesFragment");
-            transaction.commit();
+            try {
+                ShopActivityFragment activityFrag = new ShopActivityFragment(mContext, info.getActivities());
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.add(holder.fragmentActivities.getId(), activityFrag, "ActivitiesFragment");
+                transaction.commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

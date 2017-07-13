@@ -13,6 +13,21 @@ public class HotSearchWord {
     @SerializedName("link")
     private String link;
 
+    @SerializedName("search_word")
+    private String search_word;
+
+    @SerializedName("source")
+    private String source;
+
+    @SerializedName("type")
+    private String type;
+
+    @SerializedName("url")
+    private String url;
+
+    @SerializedName("word")
+    private String word;
+
     public String getIs_highlight() {
         return is_highlight;
     }
@@ -68,19 +83,4 @@ public class HotSearchWord {
     public void setWord(String word) {
         this.word = word;
     }
-
-    @SerializedName("search_word")
-    private String search_word;
-
-    @SerializedName("source")
-    private String source;
-
-    @SerializedName("type")
-    private String type;
-
-    @SerializedName("url")
-    private String url;
-
-    @SerializedName("word")
-    private String word;
 }

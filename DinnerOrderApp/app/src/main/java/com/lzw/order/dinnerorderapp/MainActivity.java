@@ -18,6 +18,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import com.lzw.order.dinnerorderapp.Bean.WeatherInfo;
 import com.lzw.order.dinnerorderapp.component.FoodEntryAdapter;
 import com.lzw.order.dinnerorderapp.fragment.HomeFragment;
 import com.lzw.order.dinnerorderapp.services.DataService;
+import com.lzw.order.dinnerorderapp.utils.DisplayUtil;
 import com.lzw.order.dinnerorderapp.utils.LocationUtil;
 import com.lzw.order.dinnerorderapp.utils.UrlUtil;
 import com.squareup.picasso.Picasso;
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private float latitude;
     private float longitude;
     private Location curLocation;
-    private boolean isLoading=false;
+    private boolean isLoading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,16 +73,15 @@ public class MainActivity extends AppCompatActivity {
         LocationManager locMgr = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (!locMgr.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivityForResult(intent,0);
+            startActivityForResult(intent, 0);
         }
 
         tvLocation = (TextView) findViewById(R.id.tvLocation);
         curLocation = LocationUtil.getCurrentLocation(this);
 
         //默认东方明珠
-        if(curLocation==null)
-        {
-            curLocation=new Location(LocationManager.GPS_PROVIDER);
+        if (curLocation == null) {
+            curLocation = new Location(LocationManager.GPS_PROVIDER);
             curLocation.setLatitude(31.2395176730);
             curLocation.setLongitude(121.4997661114);
         }
@@ -99,17 +100,16 @@ public class MainActivity extends AppCompatActivity {
         checkFirstStart();
 
         FragmentManager manager = getSupportFragmentManager();
-        final HomeFragment homeFrag = new HomeFragment(getApplicationContext(),manager,swipeRefreshLayout,curLocation);
+        final HomeFragment homeFrag = new HomeFragment(getApplicationContext(), manager, swipeRefreshLayout, curLocation);
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.fragment_container, homeFrag, "HomeFragment");
         transaction.commit();
 
-        NestedScrollView nestedScrollView=(NestedScrollView)findViewById(R.id.nestHome);
+        NestedScrollView nestedScrollView = (NestedScrollView) findViewById(R.id.nestHome);
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if(scrollY>(v.getChildAt(0).getMeasuredHeight()-v.getMeasuredHeight())-500)
-                {
+                if (scrollY > (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) - 500) {
                     homeFrag.loadMoreShopList();
                 }
             }
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(getApplicationContext(), LocationActivity.class);
-                intent.putExtra("curLocation",curLocation);
+                intent.putExtra("curLocation", curLocation);
                 startActivityForResult(intent, 1);
             }
         });
@@ -134,16 +134,17 @@ public class MainActivity extends AppCompatActivity {
         layoutSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent();
-                intent.setClass(getApplicationContext(),SearchActivity.class);
-                startActivityForResult(intent,2);
+                Intent intent = new Intent();
+                intent.setClass(getApplicationContext(), SearchActivity.class);
+                intent.putExtra("curLocation", curLocation);
+                startActivityForResult(intent, 2);
             }
         });
 
         //下拉刷新
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshHotWords);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-       // swipeRefreshLayout.setColorSchemeColors(Color.RED);
+        // swipeRefreshLayout.setColorSchemeColors(Color.RED);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -239,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         DataService service = retrofit.create(DataService.class);
-        service.getWeather("31.218254", "121.359278")
+        service.getWeather(curLocation.getLatitude(), curLocation.getLongitude())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<WeatherInfo>() {
@@ -256,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
                         tvTemp.setText(info.getTemperature() + "°");
                         tvWeather.setText(info.getDescription());
                         String path = info.getImage_hash();
-                        String url = UrlUtil.getImageUrlFromPath(UrlUtil.IMAGE_URL,path,false);
+                        String url = UrlUtil.getImageUrlFromPath(UrlUtil.IMAGE_URL, path, false);
                         Picasso.with(getApplicationContext()).load(url).into(imgView);
                     }
                 });
@@ -271,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         DataService service = retrofit.create(DataService.class);
-        service.getHotSearchWords("31.218254", "121.359278")
+        service.getHotSearchWords(null, curLocation.getLatitude(), curLocation.getLongitude())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<HotSearchWord>>() {
@@ -289,6 +290,7 @@ public class MainActivity extends AppCompatActivity {
                         line.removeAllViews();
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         params.setMargins(10, 10, 10, 10);
+                        int lineWidth = DisplayUtil.getDisplayMetrics(MainActivity.this).widthPixels - 10;
                         for (HotSearchWord item :
                                 info) {
                             TextView tv = new TextView(getApplicationContext());
@@ -297,10 +299,14 @@ public class MainActivity extends AppCompatActivity {
                             tv.setTextColor(Color.WHITE);
                             tv.setLayoutParams(params);
                             //tv.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+
+                            int tvWidth = DisplayUtil.getDynamicViewWidth(tv);
+                            lineWidth -= tvWidth + 10;
+                            if (lineWidth < 0)
+                                break;
+
                             line.addView(tv);
 
-                            int i=0;
-                            i++;
                         }
                     }
                 });

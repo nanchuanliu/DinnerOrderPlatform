@@ -4,6 +4,7 @@ import com.lzw.order.dinnerorderapp.Bean.AddressInfo;
 import com.lzw.order.dinnerorderapp.Bean.GeoInfo;
 import com.lzw.order.dinnerorderapp.Bean.HotSearchWord;
 import com.lzw.order.dinnerorderapp.Bean.LocationInfo;
+import com.lzw.order.dinnerorderapp.Bean.RestaurantInfo;
 import com.lzw.order.dinnerorderapp.Bean.ShopInfo;
 import com.lzw.order.dinnerorderapp.Bean.WeatherInfo;
 
@@ -24,17 +25,23 @@ public interface DataService {
     Observable<List<LocationInfo>> getLocationInfos(@Query("keyword") String key, @Query("offset") int offset, @Query("limit") int limit);
 
     @GET("geocode/regeo?key=3f3868abdb36336114bde5ab6eecdb68")
-    Observable<AddressInfo> getAddressInfos(@Query("location") String location,@Query("extensions") String all);
+    Observable<AddressInfo> getAddressInfos(@Query("location") String location, @Query("extensions") String all);
 
     @GET("bgs/weather/current")
-    Observable<WeatherInfo> getWeather(@Query("latitude") String latitude,@Query("longitude") String longitude);
+    Observable<WeatherInfo> getWeather(@Query("latitude") double latitude, @Query("longitude") double longitude);
 
     @GET("shopping/v3/hot_search_words")
-    Observable<List<HotSearchWord>> getHotSearchWords(@Query("latitude") String latitude, @Query("longitude") String longitude);
+    Observable<List<HotSearchWord>> getHotSearchWords(@Query("geohash") String geohash, @Query("latitude") double latitude, @Query("longitude") double longitude);
 
     @GET("bgs/poi/reverse_geo_coding")
-    Observable<GeoInfo> getGeoInfo(@Query("latitude") double latitude,@Query("longitude") double longitude);
+    Observable<GeoInfo> getGeoInfo(@Query("latitude") double latitude, @Query("longitude") double longitude);
 
     @GET("shopping/restaurants")
-    Observable<List<ShopInfo>> getShopInfosByLocation(@Query("latitude") double latitude,@Query("longitude") double longitude,@Query("offset") int offset, @Query("limit") int limit,@Query("extras[]") String extras);
+    Observable<List<ShopInfo>> getShopInfosByLocation(@Query("latitude") double latitude, @Query("longitude") double longitude,
+                                                      @Query("offset") int offset, @Query("limit") int limit, @Query("extras[]") String extras);
+
+    @GET("shopping/v1/restaurants/search")
+    Observable<RestaurantInfo> getRestaurantFoodsByKeyword(@Query("offset") int offset, @Query("limit") int limit, @Query("keyword") String keyword,
+                                                           @Query("latitude") double latitude, @Query("longitude") double longitude,
+                                                           @Query("search_item_type") String search_item_type,@Query("extra[]") String extra);
 }

@@ -24,7 +24,11 @@
             android:name=".IntroActivity"
             android:label="介绍" />
         <activity android:name=".LocationActivity" />
-        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".SearchActivity" />
+        <activity
+            android:name=".RestaurantActivity"
+            android:label="@string/title_activity_restaurant"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
