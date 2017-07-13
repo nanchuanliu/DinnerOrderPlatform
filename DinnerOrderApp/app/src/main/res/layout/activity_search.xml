@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="@color/colorLight"
+    tools:context="com.lzw.order.dinnerorderapp.SearchActivity">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/layoutSearch"
+        android:layout_width="368dp"
+        android:layout_height="36dp"
+        android:background="@color/colorLight"
+        android:gravity="center"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp">
+
+        <ImageButton
+            android:id="@+id/btnReturn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_si_glyph_arrow_thin_left_b" />
+
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:alpha="0.6"
+            android:background="@color/colorBack"
+            android:hint="搜索商家、商品名称"
+            android:textColor="@color/colorContent"
+            android:textColorHint="@color/colorContent" />
+        <TextView
+            android:id="@+id/tvSearch"
+            android:text="搜索"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:text="历史搜索" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/lineHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></LinearLayout>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:text="热门搜索" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/lineHotSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></LinearLayout>
+</LinearLayout>

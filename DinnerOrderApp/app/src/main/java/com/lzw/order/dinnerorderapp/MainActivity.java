@@ -134,7 +134,9 @@ public class MainActivity extends AppCompatActivity {
         layoutSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_LONG).show();
+                Intent intent=new Intent();
+                intent.setClass(getApplicationContext(),SearchActivity.class);
+                startActivityForResult(intent,2);
             }
         });
 
@@ -296,6 +298,9 @@ public class MainActivity extends AppCompatActivity {
                             tv.setLayoutParams(params);
                             //tv.setEllipsize(TextUtils.TruncateAt.MARQUEE);
                             line.addView(tv);
+
+                            int i=0;
+                            i++;
                         }
                     }
                 });
