@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment {
     private Context context;
     private ShopListRecyclerAdapter shopListAdapter;
     private boolean isLoading = false;
-    private LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true);
+    /*private LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true);*/
 
     public HomeFragment() {
         super();
@@ -98,21 +98,21 @@ public class HomeFragment extends Fragment {
 
     private void initRecycleList(View view) {
         rvShopList = (RecyclerView) view.findViewById(R.id.rvShopList);
-
+        LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+        layoutManager.setOrientation(OrientationHelper.VERTICAL);
         layoutManager.setAutoMeasureEnabled(true);
         rvShopList.setLayoutManager(layoutManager);
         rvShopList.setHasFixedSize(true);
         rvShopList.setNestedScrollingEnabled(false);
         ((SimpleItemAnimator)rvShopList.getItemAnimator()).setSupportsChangeAnimations(false);
-        shopListAdapter = new ShopListRecyclerAdapter(fragmentManager, getContext());
+        rvShopList.setItemAnimator(new DefaultItemAnimator());
+
+        shopListAdapter = new ShopListRecyclerAdapter(getContext());
         rvShopList.setAdapter(shopListAdapter);
 
         refreshShopList(curLocation.getLatitude(), curLocation.getLongitude(), 0, limit);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
-        rvShopList.setLayoutManager(layoutManager);
-        layoutManager.setOrientation(OrientationHelper.VERTICAL);
 
-        rvShopList.setItemAnimator(new DefaultItemAnimator());
+
     }
 
     public void loadMoreShopList() {

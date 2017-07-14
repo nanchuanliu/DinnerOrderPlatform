@@ -7,6 +7,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
+import android.support.transition.Visibility;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -40,6 +42,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 /**
@@ -50,16 +53,14 @@ public class ShopListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
     private List<ShopInfo> mDatas = new ArrayList<>();
     private Context mContext;
     private LayoutInflater inflater;
-    private FragmentManager manager;
-    private static int randomId = 100000;
     Drawable drawable;
     Resources resource;
 
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_FOOTER = 1;
 
-    public ShopListRecyclerAdapter(FragmentManager fm, Context context) {
-        this.manager = fm;
+    public ShopListRecyclerAdapter(Context context) {
+
         this.mContext = context;
 
         resource = mContext.getResources();
@@ -85,7 +86,7 @@ public class ShopListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM) {
-            View view = inflater.inflate(R.layout.control_shopitem, parent, false);
+            View view = inflater.inflate(R.layout.control_shopitem, null, false);
             ShopListViewHolder holder = new ShopListViewHolder(view);
             return holder;
         } else if (viewType == TYPE_FOOTER) {
@@ -103,7 +104,7 @@ public class ShopListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder _holder, int position) {
         if (_holder instanceof ShopListViewHolder) {
-            ShopListViewHolder holder=(ShopListViewHolder)_holder;
+            final ShopListViewHolder holder = (ShopListViewHolder) _holder;
             ShopInfo info = mDatas.get(position);
             String imagePath = info.getImage_path();
             String shopIconUrl = UrlUtil.getImageUrlFromPath(UrlUtil.SHOP_URL, imagePath, true);
@@ -113,7 +114,7 @@ public class ShopListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
                 holder.tvIsPremium.setVisibility(VISIBLE);
 
             holder.tvShopName.setText(info.getName());
-
+            holder.lineSupports.removeAllViews();
             for (ShopInfo.Support support :
                     info.getSupports()) {
                 if ("准".equals(support.getIcon_name())) {
@@ -181,13 +182,64 @@ public class ShopListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
 /*        BaseAdapter adapter=new ShopActivityAdapter(mContext,info.getActivities());
         holder.lvActivities.setAdapter(adapter);*/
 
-            try {
+/*            try {
                 ShopActivityFragment activityFrag = new ShopActivityFragment(mContext, info.getActivities());
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.add(holder.fragmentActivities.getId(), activityFrag, "ActivitiesFragment");
                 transaction.commit();
             } catch (Exception e) {
                 e.printStackTrace();
+            }*/
+            List<ShopInfo.ShopActivity> activities = info.getActivities();
+            holder.lineActivities.removeAllViews();
+            if (activities == null) {
+                holder.lineActivities.setVisibility(GONE);
+                holder.lineShowHide.setVisibility(GONE);
+            } else {
+                holder.lineActivities.setVisibility(VISIBLE);
+                holder.lineShowHide.setVisibility(VISIBLE);
+                for (int i = 0; i < activities.size(); i++) {
+                    ShopInfo.ShopActivity act = activities.get(i);
+                    View control = inflater.inflate(R.layout.control_shopactivity, null, false);
+                    TextView tvIcon = (TextView) control.findViewById(R.id.tvActivityIcon);
+                    GradientDrawable drawable = (GradientDrawable) tvIcon.getBackground();
+                    tvIcon.setText(act.getIcon_name());
+                    drawable.setColor(Color.parseColor("#" + act.getIcon_color()));
+
+                    TextView tvTip = (TextView) control.findViewById(R.id.tvActivityTip);
+                    tvTip.setText(act.getTips());
+
+                    if (i >= 2)
+                        control.setVisibility(View.GONE);
+                    else
+                        control.setVisibility(View.VISIBLE);
+                    holder.lineActivities.addView(control);
+                }
+
+                holder.tvActivityNum.setText(activities.size() + "个活动");
+
+                if (activities.size() <= 2) {
+                    holder.btnShowHide.setVisibility(View.GONE);
+                } else {
+                    holder.btnShowHide.setVisibility(View.VISIBLE);
+                    holder.lineShowHide.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            int count = holder.lineActivities.getChildCount();
+                            int visibility = VISIBLE;
+                            for (int i = 2; i < count; i++) {
+                                View sub = holder.lineActivities.getChildAt(i);
+                                if (i == 2)
+                                    visibility = sub.getVisibility();
+                                if (visibility == GONE) {
+                                    sub.setVisibility(View.VISIBLE);
+                                } else {
+                                    sub.setVisibility(View.GONE);
+                                }
+                            }
+                        }
+                    });
+                }
             }
         }
     }
@@ -214,7 +266,10 @@ public class ShopListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
         TextView tvDistance;
         TextView tvOrderLeadTime;
         FrameLayout fragmentActivities;
+        LinearLayout lineActivities;
         TextView tvActivityNum;
+        ImageButton btnShowHide;
+        LinearLayout lineShowHide;
 
         public ShopListViewHolder(View view) {
             super(view);
@@ -233,10 +288,12 @@ public class ShopListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
             tvDeliveryMode = (TextView) view.findViewById(R.id.tvDeliveryMode);
             tvDistance = (TextView) view.findViewById(R.id.tvDistance);
             tvOrderLeadTime = (TextView) view.findViewById(R.id.tvOrderLeadTime);
-            fragmentActivities = (FrameLayout) view.findViewById(R.id.fragment_activities);
-            fragmentActivities.setId(++randomId);
+/*            fragmentActivities = (FrameLayout) view.findViewById(R.id.fragment_activities);
+            fragmentActivities.setId(++randomId);*/
+            lineActivities = (LinearLayout) view.findViewById(R.id.lineActivities);
             tvActivityNum = (TextView) view.findViewById(R.id.tvActivityNum);
-
+            btnShowHide = (ImageButton) view.findViewById(R.id.btnShowHide);
+            lineShowHide = (LinearLayout) view.findViewById(R.id.lineShowHide);
         }
     }
 

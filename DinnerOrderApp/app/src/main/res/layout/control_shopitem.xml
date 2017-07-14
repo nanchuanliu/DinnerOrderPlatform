@@ -243,10 +243,13 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="12dp" />
         </LinearLayout>
-        <FrameLayout
+<!--        <FrameLayout
             android:id="@+id/fragment_activities"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></FrameLayout>
+            android:layout_height="wrap_content"></FrameLayout>-->
+        <include layout="@layout/fragment_shop_activity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 <!--        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
