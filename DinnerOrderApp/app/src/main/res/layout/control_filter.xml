@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lineFilter"
+    android:background="@color/colorLightGray"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="配送方式" />
+
+    <android.support.v7.widget.GridLayout
+        android:id="@+id/gridDeliveryMode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorLightGray"
+        app:columnCount="3"
+        app:rowCount="2">
+
+        <com.lzw.order.dinnerorderapp.controls.CustomSwitchButton
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="1dp"
+            app:layout_columnWeight="1" />
+
+        <com.lzw.order.dinnerorderapp.controls.CustomSwitchButton
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="1dp"
+            app:layout_columnWeight="1" />
+
+        <com.lzw.order.dinnerorderapp.controls.CustomSwitchButton
+            android:layout_marginRight="1dp"
+            app:layout_columnWeight="1" />
+
+    </android.support.v7.widget.GridLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:text="商家属性(可多选)" />
+
+    <android.support.v7.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorLightGray"
+        android:id="@+id/gridActivities"
+        app:columnCount="3"
+        app:rowCount="2">
+
+        <com.lzw.order.dinnerorderapp.controls.CustomSwitchButton
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="1dp"
+            app:layout_columnWeight="1" />
+
+        <com.lzw.order.dinnerorderapp.controls.CustomSwitchButton
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="1dp"
+            app:layout_columnWeight="1" />
+
+        <com.lzw.order.dinnerorderapp.controls.CustomSwitchButton
+            android:layout_marginBottom="1dp"
+            app:layout_columnWeight="1" />
+        <com.lzw.order.dinnerorderapp.controls.CustomSwitchButton
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="1dp"
+            app:layout_columnWeight="1" />
+
+        <com.lzw.order.dinnerorderapp.controls.CustomSwitchButton
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="1dp"
+            app:layout_columnWeight="1" />
+
+        <com.lzw.order.dinnerorderapp.controls.CustomSwitchButton
+            android:layout_marginBottom="1dp"
+            app:layout_columnWeight="1" />
+
+    </android.support.v7.widget.GridLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorLight"
+        >
+        <TextView
+            android:id="@+id/btnClear"
+            android:text="清空"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/btnSearch"
+            android:text="确定"
+            android:padding="10dp"
+            android:textSize="20dp"
+            android:background="#56d176"
+            android:textColor="@color/colorLight"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+</LinearLayout>

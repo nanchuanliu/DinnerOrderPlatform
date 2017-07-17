@@ -10,6 +10,7 @@
     <color name="colorDark">#666666</color>
     <color name="colorIndicatorE">#55666666</color>
     <color name="colorIndicatorD">#22666666</color>
+    <color name="colorLightGray">#11aaaaaa</color>
 
     <!--SVG颜色-->
     <color name="colorSVGBack">@android:color/transparent</color>

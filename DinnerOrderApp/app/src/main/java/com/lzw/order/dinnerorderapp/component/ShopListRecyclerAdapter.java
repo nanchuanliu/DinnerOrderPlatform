@@ -31,6 +31,7 @@ import com.lzw.order.dinnerorderapp.Bean.ShopInfo;
 import com.lzw.order.dinnerorderapp.R;
 import com.lzw.order.dinnerorderapp.fragment.HomeFragment;
 import com.lzw.order.dinnerorderapp.fragment.ShopActivityFragment;
+import com.lzw.order.dinnerorderapp.utils.DisplayUtil;
 import com.lzw.order.dinnerorderapp.utils.UrlUtil;
 import com.squareup.picasso.Picasso;
 
@@ -72,6 +73,11 @@ public class ShopListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
     public void addDatas(List<ShopInfo> datas, int pos) {
         this.mDatas.addAll(datas);
         this.notifyItemRangeInserted(pos, datas.size());
+    }
+
+    public void resetAdapter()
+    {
+        mDatas.clear();
     }
 
     @Override
@@ -243,6 +249,8 @@ public class ShopListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
             }
         }
     }
+
+
 
     @Override
     public int getItemCount() {

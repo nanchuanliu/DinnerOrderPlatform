@@ -1,6 +1,8 @@
 package com.lzw.order.dinnerorderapp.services;
 
+import com.lzw.order.dinnerorderapp.Bean.ActivityAttribute;
 import com.lzw.order.dinnerorderapp.Bean.AddressInfo;
+import com.lzw.order.dinnerorderapp.Bean.BaseAttribute;
 import com.lzw.order.dinnerorderapp.Bean.GeoInfo;
 import com.lzw.order.dinnerorderapp.Bean.HotSearchWord;
 import com.lzw.order.dinnerorderapp.Bean.LocationInfo;
@@ -42,6 +44,12 @@ public interface DataService {
 
     @GET("shopping/v1/restaurants/search")
     Observable<RestaurantInfo> getRestaurantFoodsByKeyword(@Query("offset") int offset, @Query("limit") int limit, @Query("keyword") String keyword,
-                                                           @Query("latitude") double latitude, @Query("longitude") double longitude,
-                                                           @Query("search_item_type") String search_item_type,@Query("extra[]") String extra);
+                                                           @Query("latitude") double latitude, @Query("longitude") double longitude,@Query("search_item_type") String search_item_type,
+                                                           @Query("extra[]") String extra,@Query("order_by") String orderBy,@Query("support_ids[]") String ids,@Query("delivery_mode[]") String modes);
+
+    @GET("shopping/v1/restaurants/delivery_modes")
+    Observable<List<ActivityAttribute>> getDeliveryModesByLocation(@Query("latitude") double latitude, @Query("longitude") double longitude);
+
+    @GET("shopping/v1/restaurants/activity_attributes")
+    Observable<List<BaseAttribute>> getActivityAttributesByLocation(@Query("latitude") double latitude, @Query("longitude") double longitude);
 }

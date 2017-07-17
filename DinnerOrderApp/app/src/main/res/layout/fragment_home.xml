@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/colorBack">
+    android:layout_height="wrap_content"
+    android:background="@color/colorBack"
+    android:orientation="vertical">
 
     <!--<com.lzw.order.dinnerorderapp.library.TabPageIndicator
         android:id="@+id/vpi_indicator"
@@ -16,36 +16,36 @@
         android:layout_height="0dp"
         android:layout_below="@id/vpi_indicator"
         android:layout_weight="1"></android.support.v4.view.ViewPager>-->
-<!--    <RelativeLayout
-        android:background="@color/colorPrimary"
+    <!--    <RelativeLayout
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">-->
+
+    <!--        <Button
+                android:layout_width="match_parent"
+                android:layout_height="80dp" />-->
+
+    <com.lzw.order.dinnerorderapp.component.ScrollViewPager
+        android:id="@+id/vpFoodEntry"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">-->
+        android:layout_height="180dp"
+        android:background="@color/colorLight"></com.lzw.order.dinnerorderapp.component.ScrollViewPager>
 
-<!--        <Button
-            android:layout_width="match_parent"
-            android:layout_height="80dp" />-->
+    <LinearLayout
+        android:id="@+id/indicatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/vpFoodEntry"
+        android:gravity="center"
+        android:orientation="horizontal"></LinearLayout>
 
-        <com.lzw.order.dinnerorderapp.component.ScrollViewPager
-            android:id="@+id/vpFoodEntry"
-            android:layout_width="match_parent"
-            android:background="@color/colorLight"
-            android:layout_height="180dp"></com.lzw.order.dinnerorderapp.component.ScrollViewPager>
-
-        <LinearLayout
-            android:id="@+id/indicatorLayout"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="center"
-            android:layout_alignBottom="@+id/vpFoodEntry"
-            android:orientation="horizontal"></LinearLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvShopList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/vpFoodEntry"
-            android:background="@color/colorLight"></android.support.v7.widget.RecyclerView>
-<!--    </RelativeLayout>-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvShopList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/vpFoodEntry"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorLight"></android.support.v7.widget.RecyclerView>
+    <!--    </RelativeLayout>-->
 
 </RelativeLayout>
