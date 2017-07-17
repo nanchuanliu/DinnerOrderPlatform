@@ -16,6 +16,7 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -28,6 +29,10 @@
             android:name=".RestaurantActivity"
             android:label="@string/title_activity_restaurant"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DinnerOrderActivity"
+            android:label="@string/title_activity_dinner_order"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
