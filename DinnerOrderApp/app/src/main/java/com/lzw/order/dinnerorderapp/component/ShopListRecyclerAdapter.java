@@ -93,6 +93,7 @@ public class ShopListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM) {
             View view = inflater.inflate(R.layout.control_shopitem, null, false);
+            view.setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             ShopListViewHolder holder = new ShopListViewHolder(view);
             return holder;
         } else if (viewType == TYPE_FOOTER) {
