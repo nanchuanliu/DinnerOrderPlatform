@@ -3,11 +3,27 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvCategory"
-        android:text="金牌特调樽装系列"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:gravity="center_vertical"
-        />
+    <LinearLayout
+        android:id="@+id/lineCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/category_item"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
+        <ImageView
+            android:id="@+id/imgIcon"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvCategory"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="3dp"
+            android:gravity="center_vertical"
+            android:text="金牌特调樽装系列"
+            android:textSize="14dp" />
+    </LinearLayout>
 </LinearLayout>

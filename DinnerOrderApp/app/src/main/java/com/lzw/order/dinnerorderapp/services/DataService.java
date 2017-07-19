@@ -3,6 +3,8 @@ package com.lzw.order.dinnerorderapp.services;
 import com.lzw.order.dinnerorderapp.Bean.ActivityAttribute;
 import com.lzw.order.dinnerorderapp.Bean.AddressInfo;
 import com.lzw.order.dinnerorderapp.Bean.BaseAttribute;
+import com.lzw.order.dinnerorderapp.Bean.Category;
+import com.lzw.order.dinnerorderapp.Bean.Food;
 import com.lzw.order.dinnerorderapp.Bean.GeoInfo;
 import com.lzw.order.dinnerorderapp.Bean.HotSearchWord;
 import com.lzw.order.dinnerorderapp.Bean.LocationInfo;
@@ -54,5 +56,5 @@ public interface DataService {
     Observable<List<BaseAttribute>> getActivityAttributesByLocation(@Query("latitude") double latitude, @Query("longitude") double longitude);
 
     @GET("shopping/v2/menu")
-    Observable<List<RestaurantInfo.Food>> getMenusByRestaurantId(@Query("restaurant_id") String restaurantId);
+    Observable<List<Category>> getMenusByRestaurantId(@Query("restaurant_id") String restaurantId);
 }

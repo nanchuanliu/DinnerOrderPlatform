@@ -37,6 +37,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lzw.order.dinnerorderapp.Bean.ActivityAttribute;
 import com.lzw.order.dinnerorderapp.Bean.BaseAttribute;
@@ -153,6 +154,16 @@ public class RestaurantActivity extends AppCompatActivity {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+            }
+        });
+
+        restaurantListAdapter.setOnItemClickListener(new ShopListRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                ShopInfo shop=restaurantListAdapter.getAdapterItem(position);
+                Intent orderIntent=new Intent(RestaurantActivity.this,DinnerOrderActivity.class);
+                orderIntent.putExtra("Id",shop.getId());
+                startActivity(orderIntent);
             }
         });
 

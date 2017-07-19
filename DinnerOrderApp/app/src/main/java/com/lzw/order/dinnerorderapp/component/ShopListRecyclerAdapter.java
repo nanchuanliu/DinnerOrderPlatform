@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -50,7 +51,7 @@ import static android.view.View.VISIBLE;
  * Created by Administrator on 2017/7/8.
  */
 
-public class ShopListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
+public class ShopListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> implements View.OnClickListener{
     private List<ShopInfo> mDatas = new ArrayList<>();
     private Context mContext;
     private LayoutInflater inflater;
@@ -70,9 +71,33 @@ public class ShopListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
         inflater = LayoutInflater.from(context);
     }
 
+    private OnItemClickListener mOnItemClickListener=null;
+
+    @Override
+    public void onClick(View view) {
+        if(mOnItemClickListener!=null)
+        {
+            mOnItemClickListener.onItemClick(view,(int)view.getTag());
+        }
+    }
+
+    public static interface OnItemClickListener{
+        void onItemClick(View view,int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener)
+    {
+        this.mOnItemClickListener=listener;
+    }
+
     public void addDatas(List<ShopInfo> datas, int pos) {
         this.mDatas.addAll(datas);
         this.notifyItemRangeInserted(pos, datas.size());
+    }
+
+    public ShopInfo getAdapterItem(int position)
+    {
+        return this.mDatas.get(position);
     }
 
     public void resetAdapter()
@@ -95,6 +120,7 @@ public class ShopListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
             View view = inflater.inflate(R.layout.control_shopitem, null, false);
             view.setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             ShopListViewHolder holder = new ShopListViewHolder(view);
+            view.setOnClickListener(this);
             return holder;
         } else if (viewType == TYPE_FOOTER) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.control_footerview, null);
@@ -248,6 +274,8 @@ public class ShopListRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
                     });
                 }
             }
+
+            holder.itemView.setTag(position);
         }
     }
 

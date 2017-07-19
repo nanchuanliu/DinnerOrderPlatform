@@ -12,6 +12,7 @@ public class Category {
     private String icon_url;
     private String name;
     private int type;
+    private boolean selected;
 
     public String getDescription() {
         return description;
@@ -51,5 +52,13 @@ public class Category {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

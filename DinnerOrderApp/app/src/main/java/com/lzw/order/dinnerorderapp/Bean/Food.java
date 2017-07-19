@@ -1,5 +1,7 @@
 package com.lzw.order.dinnerorderapp.Bean;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/7/19.
  */
@@ -15,6 +17,49 @@ public class Food {
     private double rating;
     private int satisfy_count;
     private int satisfy_rate;
+    private String tips;
+    private List<SpecFood> specfoods;
+
+    public class SpecFood
+    {
+        private String food_id;
+        private String item_id;
+        private String name;
+        private String price;
+
+        public String getFood_id() {
+            return food_id;
+        }
+
+        public void setFood_id(String food_id) {
+            this.food_id = food_id;
+        }
+
+        public String getItem_id() {
+            return item_id;
+        }
+
+        public void setItem_id(String item_id) {
+            this.item_id = item_id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getPrice() {
+            return price;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
+        }
+    }
+
 
     public String getCategory_id() {
         return category_id;
@@ -94,5 +139,21 @@ public class Food {
 
     public void setSatisfy_rate(int satisfy_rate) {
         this.satisfy_rate = satisfy_rate;
+    }
+
+    public String getTips() {
+        return tips;
+    }
+
+    public void setTips(String tips) {
+        this.tips = tips;
+    }
+
+    public List<SpecFood> getSpecfoods() {
+        return specfoods;
+    }
+
+    public void setSpecfoods(List<SpecFood> specfoods) {
+        this.specfoods = specfoods;
     }
 }
