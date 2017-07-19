@@ -52,4 +52,7 @@ public interface DataService {
 
     @GET("shopping/v1/restaurants/activity_attributes")
     Observable<List<BaseAttribute>> getActivityAttributesByLocation(@Query("latitude") double latitude, @Query("longitude") double longitude);
+
+    @GET("shopping/v2/menu")
+    Observable<List<RestaurantInfo.Food>> getMenusByRestaurantId(@Query("restaurant_id") String restaurantId);
 }

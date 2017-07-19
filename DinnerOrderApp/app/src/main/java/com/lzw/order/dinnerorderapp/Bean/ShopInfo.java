@@ -20,6 +20,7 @@ public class ShopInfo {
     private DeliveryMode delivery_mode;
     private String distance;
     private String order_lead_time;
+    private int id;
 
     public class ShopActivity {
         private String tips;
@@ -245,5 +246,13 @@ public class ShopInfo {
 
     public void setDelivery_mode(DeliveryMode delivery_mode) {
         this.delivery_mode = delivery_mode;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
