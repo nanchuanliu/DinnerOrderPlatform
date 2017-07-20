@@ -11,6 +11,8 @@
     <color name="colorIndicatorE">#55666666</color>
     <color name="colorIndicatorD">#22666666</color>
     <color name="colorLightGray">#11aaaaaa</color>
+    <color name="colorBottom">#3d3d3f</color>
+    <color name="colorGreen">#4cd964</color>
 
     <!--SVG颜色-->
     <color name="colorSVGBack">@android:color/transparent</color>

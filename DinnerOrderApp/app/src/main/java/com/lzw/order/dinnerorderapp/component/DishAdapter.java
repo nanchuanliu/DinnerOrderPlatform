@@ -1,6 +1,7 @@
 package com.lzw.order.dinnerorderapp.component;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +15,9 @@ import android.widget.TextView;
 
 import com.lzw.order.dinnerorderapp.Bean.Category;
 import com.lzw.order.dinnerorderapp.Bean.Food;
+import com.lzw.order.dinnerorderapp.DinnerOrderActivity;
 import com.lzw.order.dinnerorderapp.R;
+import com.lzw.order.dinnerorderapp.utils.DisplayUtil;
 import com.lzw.order.dinnerorderapp.utils.UrlUtil;
 import com.squareup.picasso.Picasso;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
@@ -59,7 +62,7 @@ public class DishAdapter extends RecyclerView.Adapter<ViewHolder> implements Sti
 
     @Override
     public void onBindViewHolder(ViewHolder _holder, int position) {
-        DishViewHolder holder = (DishViewHolder) _holder;
+        final DishViewHolder holder = (DishViewHolder) _holder;
         Food food = foods.get(position);
         String imagePath = food.getImage_path();
         String imageUrl = UrlUtil.getImageUrlFromPath(UrlUtil.DISH_URL, imagePath, true);
@@ -78,6 +81,44 @@ public class DishAdapter extends RecyclerView.Adapter<ViewHolder> implements Sti
         holder.tvSatisfyRate.setText("好评率"+food.getSatisfy_rate()+"%");
         holder.tvPrice.setText("¥"+food.getSpecfoods().get(0).getPrice());
 
+        holder.imgDishAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Integer num= Integer.parseInt(holder.tvCount.getText().toString());
+                if(num++==0)
+                {
+                    holder.tvCount.setVisibility(View.VISIBLE);
+                    holder.imgDishSub.setVisibility(View.VISIBLE);
+                }
+
+                holder.tvCount.setText(num.toString());
+                int[] startLocation=new int[2];
+                holder.imgDishAdd.getLocationInWindow(startLocation);
+                startLocation[0]= DisplayUtil.px2dip(context,startLocation[0]);
+                startLocation[1]= DisplayUtil.px2dip(context,startLocation[1]);
+
+                //holder.imgDishAdd.getLocationOnScreen(startLocation);
+                ImageView animView=new ImageView(context);
+                animView.setImageResource(R.drawable.hgr);
+                ((DinnerOrderActivity)context).setAnim(animView,startLocation);
+            }
+        });
+
+        holder.imgDishSub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Integer num= Integer.parseInt(holder.tvCount.getText().toString());
+                if(--num==0)
+                {
+                    holder.tvCount.setVisibility(View.GONE);
+                    holder.imgDishSub.setVisibility(View.GONE);
+                }
+
+                holder.tvCount.setText(num.toString());
+            }
+        });
     }
 
     @Override
@@ -129,7 +170,9 @@ public class DishAdapter extends RecyclerView.Adapter<ViewHolder> implements Sti
         TextView tvMonthSales;
         TextView tvSatisfyRate;
         TextView tvPrice;
-        ImageView imgOrder;
+        ImageView imgDishAdd;
+        TextView tvCount;
+        ImageView imgDishSub;
 
         public DishViewHolder(View view) {
             super(view);
@@ -140,7 +183,9 @@ public class DishAdapter extends RecyclerView.Adapter<ViewHolder> implements Sti
             tvMonthSales = (TextView) view.findViewById(R.id.tvMonthSales);
             tvSatisfyRate = (TextView) view.findViewById(R.id.tvSatisfyRate);
             tvPrice = (TextView) view.findViewById(R.id.tvPrice);
-            imgOrder = (ImageView) view.findViewById(R.id.imgOrder);
+            imgDishAdd = (ImageView) view.findViewById(R.id.imgDishAdd);
+            tvCount=(TextView)view.findViewById(R.id.tvCount);
+            imgDishSub=(ImageView)view.findViewById(R.id.imgDishSub);
         }
     }
 }

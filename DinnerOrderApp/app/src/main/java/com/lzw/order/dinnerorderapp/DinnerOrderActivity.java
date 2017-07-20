@@ -6,11 +6,21 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -43,6 +53,7 @@ public class DinnerOrderActivity extends AppCompatActivity implements CategoryAd
     private LinearLayoutManager categoryLayoutManager;
     private CategoryAdapter categoryAdapter;
     private List<Category> listCategory;
+    private ImageView imgCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +102,8 @@ public class DinnerOrderActivity extends AppCompatActivity implements CategoryAd
                         .setAction("Action", null).show();
             }
         });
+
+        imgCart=(ImageView)findViewById(R.id.imgCart);
     }
 
     private void refreshMenusByRestaurantId(String id) {
@@ -202,5 +215,88 @@ public class DinnerOrderActivity extends AppCompatActivity implements CategoryAd
             movePosition = pos;
             needMove = true;
         }
+    }
+
+    //动画层
+    private ViewGroup anim_mask_layout;
+
+    /*
+     * 创建动画层
+     */
+    private ViewGroup createAnimLayout()
+    {
+        ViewGroup rootView=(ViewGroup)this.getWindow().getDecorView();
+        LinearLayout animLayout=new LinearLayout(this);
+        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        animLayout.setLayoutParams(params);
+        animLayout.setId(Integer.MAX_VALUE-1);
+        animLayout.setBackgroundResource(android.R.color.holo_purple);
+        animLayout.setAlpha(0.3f);
+        rootView.addView(animLayout);
+        return animLayout;
+    }
+
+    private View addViewToAnimLayout(ViewGroup parent,View view,int[] location)
+    {
+        int x=location[0];
+        int y=location[1];
+
+        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        params.leftMargin=x;
+        params.topMargin=y;
+        view.setLayoutParams(params);
+        return view;
+    }
+
+    public void setAnim(final View _view, int[] startLocation)
+    {
+        anim_mask_layout=createAnimLayout();
+        anim_mask_layout.addView(_view);
+        View view=addViewToAnimLayout(anim_mask_layout,_view,startLocation);
+        int[] endLocation=new int[2];  //存储动画结束为止的X、Y坐标
+        imgCart.getLocationInWindow(endLocation);
+        //imgCart.getLocationOnScreen(endLocation);
+
+        //计算位移
+        int endX=0-startLocation[0]+20;
+        int endY=endLocation[1]-startLocation[1];
+
+        TranslateAnimation translateAnimX=new TranslateAnimation(0,endX,0,0);
+        translateAnimX.setInterpolator(new LinearInterpolator());
+        translateAnimX.setRepeatCount(0);
+        translateAnimX.setFillAfter(true);
+
+        TranslateAnimation translateAnimY=new TranslateAnimation(0,0,0,endY);
+        translateAnimY.setInterpolator(new AccelerateInterpolator());
+        translateAnimY.setRepeatCount(0);
+        translateAnimY.setFillAfter(true);
+
+        AnimationSet set=new AnimationSet(false);
+        set.setFillAfter(false);
+        set.addAnimation(translateAnimX);
+        set.addAnimation(translateAnimY);
+        set.setDuration(800);
+
+        view.startAnimation(set);
+        set.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                _view.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                _view.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
     }
 }
