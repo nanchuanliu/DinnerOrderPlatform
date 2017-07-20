@@ -58,6 +58,7 @@ public class DinnerOrderActivity extends AppCompatActivity implements CategoryAd
         categoryLayoutManager = new LinearLayoutManager(this);
         rvCategory = (RecyclerView) findViewById(R.id.rvCategory);
         rvCategory.setLayoutManager(categoryLayoutManager);
+
         rvDish = (RecyclerView) findViewById(R.id.rvDish);
         dishLayoutManager = new LinearLayoutManager(this);
         dishLayoutManager.setOrientation(OrientationHelper.VERTICAL);
@@ -118,6 +119,8 @@ public class DinnerOrderActivity extends AppCompatActivity implements CategoryAd
                         listCategory = datas;
 
                         categoryAdapter = new CategoryAdapter(DinnerOrderActivity.this, datas);
+                        categoryAdapter.setOnItemClickListener(DinnerOrderActivity.this);
+
                         rvCategory.setAdapter(categoryAdapter);
 
                         foods = datas.get(0).getFoods();
@@ -192,7 +195,7 @@ public class DinnerOrderActivity extends AppCompatActivity implements CategoryAd
         if (pos <= firstItem) {
             rvDish.scrollToPosition(pos);
         } else if (pos <= lastItem) {
-            int top = rvDish.getChildAt(pos = firstItem).getTop();
+            int top = rvDish.getChildAt(pos - firstItem).getTop();
             rvDish.scrollBy(0, top - DisplayUtil.dip2px(this, 28));
         } else {
             rvDish.scrollToPosition(pos);
