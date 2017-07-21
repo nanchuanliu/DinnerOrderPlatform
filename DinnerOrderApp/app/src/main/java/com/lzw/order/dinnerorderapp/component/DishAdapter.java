@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lzw.order.dinnerorderapp.Bean.Category;
@@ -34,11 +35,11 @@ import java.util.List;
  * Created by LZW on 2017/07/19.
  */
 
-public class DishAdapter extends RecyclerView.Adapter<ViewHolder> implements StickyRecyclerHeadersAdapter<ViewHolder>{
+public class DishAdapter extends RecyclerView.Adapter<ViewHolder> implements StickyRecyclerHeadersAdapter<ViewHolder> {
 
     private Context context;
     private List<Category> list;
-    private List<Food> foods=new ArrayList<>();
+    private List<Food> foods = new ArrayList<>();
     private LayoutInflater inflater;
 
 
@@ -47,8 +48,8 @@ public class DishAdapter extends RecyclerView.Adapter<ViewHolder> implements Sti
         this.list = _list;
         inflater = LayoutInflater.from(_context);
 
-        for (Category cat:
-             _list) {
+        for (Category cat :
+                _list) {
             foods.addAll(cat.getFoods());
         }
     }
@@ -65,7 +66,7 @@ public class DishAdapter extends RecyclerView.Adapter<ViewHolder> implements Sti
     @Override
     public void onBindViewHolder(ViewHolder _holder, int position) {
         final DishViewHolder holder = (DishViewHolder) _holder;
-        Food food = foods.get(position);
+        final Food food = foods.get(position);
         String imagePath = food.getImage_path();
         String imageUrl = UrlUtil.getImageUrlFromPath(UrlUtil.DISH_URL, imagePath, true);
         Picasso.with(context).load(imageUrl).into(holder.imgDishIcon);
@@ -79,23 +80,22 @@ public class DishAdapter extends RecyclerView.Adapter<ViewHolder> implements Sti
             holder.tvDescription.setText(food.getDescription());
         }
 
-        holder.tvMonthSales.setText("月售"+food.getMonth_sales()+"份");
-        holder.tvSatisfyRate.setText("好评率"+food.getSatisfy_rate()+"%");
-        holder.tvPrice.setText("¥"+food.getSpecfoods().get(0).getPrice());
+        holder.tvMonthSales.setText("月售" + food.getMonth_sales() + "份");
+        holder.tvSatisfyRate.setText("好评率" + food.getSatisfy_rate() + "%");
+        holder.tvPrice.setText("¥" + food.getSpecfoods().get(0).getPrice());
 
         holder.imgDishAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Integer num= Integer.parseInt(holder.tvCount.getText().toString());
-                if(num++==0)
-                {
+                Integer num = Integer.parseInt(holder.tvCount.getText().toString());
+                if (num++ == 0) {
                     holder.tvCount.setVisibility(View.VISIBLE);
                     holder.imgDishSub.setVisibility(View.VISIBLE);
                 }
 
                 holder.tvCount.setText(num.toString());
-                int[] startLocation=new int[2];
+                int[] startLocation = new int[2];
                 holder.imgDishAdd.getLocationInWindow(startLocation);
 /*
                 startLocation[0]= DisplayUtil.px2dip(context,startLocation[0]);
@@ -103,9 +103,14 @@ public class DishAdapter extends RecyclerView.Adapter<ViewHolder> implements Sti
 */
 
                 //holder.imgDishAdd.getLocationOnScreen(startLocation);
-                ImageView animView=new ImageView(context);
-                animView.setImageResource(R.drawable.number);
-                ((DinnerOrderActivity)context).setAnim(animView,startLocation);
+                ImageView animView = new ImageView(context);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(16, 16);
+                animView.setLayoutParams(params);
+                animView.setImageResource(R.drawable.ic_si_glyph_billiard_ball);
+                DinnerOrderActivity activity = (DinnerOrderActivity) context;
+                activity.setAnim(animView, startLocation);
+
+                activity.refreshCategorySelectedCount(food.getCategory_id(), 1);
             }
         });
 
@@ -113,14 +118,14 @@ public class DishAdapter extends RecyclerView.Adapter<ViewHolder> implements Sti
             @Override
             public void onClick(View view) {
 
-                Integer num= Integer.parseInt(holder.tvCount.getText().toString());
-                if(--num==0)
-                {
+                Integer num = Integer.parseInt(holder.tvCount.getText().toString());
+                if (--num == 0) {
                     holder.tvCount.setVisibility(View.GONE);
                     holder.imgDishSub.setVisibility(View.GONE);
                 }
 
                 holder.tvCount.setText(num.toString());
+                ((DinnerOrderActivity) context).refreshCategorySelectedCount(food.getCategory_id(), -1);
             }
         });
     }
@@ -130,34 +135,33 @@ public class DishAdapter extends RecyclerView.Adapter<ViewHolder> implements Sti
         return getSortType(position);
     }
 
-    public int getSortType(int position)
-    {
-        int sort=-1;
-        int sum=0;
+    public int getSortType(int position) {
+        int sort = -1;
+        int sum = 0;
         for (int i = 0; i < list.size(); i++) {
-            if(position>=sum)
+            if (position >= sum)
                 sort++;
             else
                 return sort;
 
-            sum+=list.get(i).getFoods().size();
+            sum += list.get(i).getFoods().size();
         }
         return sort;
     }
 
     @Override
     public ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.list_dish_header,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_dish_header, parent, false);
         return new DishViewHolder(view);
     }
 
     @Override
     public void onBindHeaderViewHolder(ViewHolder holder, int position) {
-        View view=holder.itemView;
-        TextView tvHeaderCat=(TextView)view.findViewById(R.id.tvHeaderCat);
-        TextView tvHeaderDesp=(TextView)view.findViewById(R.id.tvHeaderDesp);
+        View view = holder.itemView;
+        TextView tvHeaderCat = (TextView) view.findViewById(R.id.tvHeaderCat);
+        TextView tvHeaderDesp = (TextView) view.findViewById(R.id.tvHeaderDesp);
 
-        Category cate=list.get(getSortType(position));
+        Category cate = list.get(getSortType(position));
         tvHeaderCat.setText(cate.getName());
         tvHeaderDesp.setText(cate.getDescription());
     }
@@ -188,8 +192,8 @@ public class DishAdapter extends RecyclerView.Adapter<ViewHolder> implements Sti
             tvSatisfyRate = (TextView) view.findViewById(R.id.tvSatisfyRate);
             tvPrice = (TextView) view.findViewById(R.id.tvPrice);
             imgDishAdd = (ImageView) view.findViewById(R.id.imgDishAdd);
-            tvCount=(TextView)view.findViewById(R.id.tvCount);
-            imgDishSub=(ImageView)view.findViewById(R.id.imgDishSub);
+            tvCount = (TextView) view.findViewById(R.id.tvCount);
+            imgDishSub = (ImageView) view.findViewById(R.id.imgDishSub);
         }
     }
 }

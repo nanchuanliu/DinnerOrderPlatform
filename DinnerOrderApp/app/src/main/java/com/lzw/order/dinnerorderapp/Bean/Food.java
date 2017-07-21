@@ -19,6 +19,7 @@ public class Food {
     private int satisfy_rate;
     private String tips;
     private List<SpecFood> specfoods;
+    private String category_type;
 
     public class SpecFood
     {
@@ -155,5 +156,13 @@ public class Food {
 
     public void setSpecfoods(List<SpecFood> specfoods) {
         this.specfoods = specfoods;
+    }
+
+    public String getCategory_type() {
+        return category_type;
+    }
+
+    public void setCategory_type(String category_type) {
+        this.category_type = category_type;
     }
 }

@@ -57,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="130dp"
                     android:layout_marginTop="100dp"
+                    android:singleLine="true"
                     android:text="欢迎光临！" />
 
                 <LinearLayout
@@ -152,6 +153,19 @@
             android:layout_height="30dp"
             android:src="@drawable/ic_cart"
             android:layout_centerInParent="true"/>
+        <TextView
+            android:id="@+id/tvCartCount"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:text="7"
+            android:textSize="13dp"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/imgCart"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="8dp"
+            android:textColor="@color/colorLight"
+            android:background="@drawable/circle"
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton

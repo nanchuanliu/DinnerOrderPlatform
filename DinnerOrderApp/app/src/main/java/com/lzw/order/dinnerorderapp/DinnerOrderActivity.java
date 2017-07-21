@@ -1,10 +1,14 @@
 package com.lzw.order.dinnerorderapp;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,19 +26,26 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lzw.order.dinnerorderapp.Bean.Category;
 import com.lzw.order.dinnerorderapp.Bean.Food;
+import com.lzw.order.dinnerorderapp.Bean.ShopInfo;
 import com.lzw.order.dinnerorderapp.component.CategoryAdapter;
 import com.lzw.order.dinnerorderapp.component.DishAdapter;
 import com.lzw.order.dinnerorderapp.services.DataService;
 import com.lzw.order.dinnerorderapp.utils.DisplayUtil;
 import com.lzw.order.dinnerorderapp.utils.UrlUtil;
+import com.squareup.picasso.Picasso;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -43,9 +54,12 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static android.view.View.VISIBLE;
+
 public class DinnerOrderActivity extends AppCompatActivity implements CategoryAdapter.OnItemClickListener {
 
     private String restaurantId;
+    private Location curLocation;
     private RecyclerView rvCategory;
     private RecyclerView rvDish;
     private LinearLayoutManager dishLayoutManager;
@@ -54,6 +68,7 @@ public class DinnerOrderActivity extends AppCompatActivity implements CategoryAd
     private CategoryAdapter categoryAdapter;
     private List<Category> listCategory;
     private ImageView imgCart;
+    private TextView tvCartCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +80,7 @@ public class DinnerOrderActivity extends AppCompatActivity implements CategoryAd
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         restaurantId = bundle.getString("Id");
+        curLocation = (Location) bundle.get("Location");
 
         categoryLayoutManager = new LinearLayoutManager(this);
         rvCategory = (RecyclerView) findViewById(R.id.rvCategory);
@@ -92,6 +108,7 @@ public class DinnerOrderActivity extends AppCompatActivity implements CategoryAd
             });
         }
 
+        refreshRestaurantInfo(restaurantId, curLocation);
         refreshMenusByRestaurantId(restaurantId);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -103,7 +120,72 @@ public class DinnerOrderActivity extends AppCompatActivity implements CategoryAd
             }
         });
 
-        imgCart=(ImageView)findViewById(R.id.imgCart);
+        imgCart = (ImageView) findViewById(R.id.imgCart);
+        tvCartCount = (TextView) findViewById(R.id.tvCartCount);
+    }
+
+    private void refreshRestaurantInfo(String id, Location location) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(UrlUtil.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+        DataService service = retrofit.create(DataService.class);
+        service.getRestaurantInfo(id, location.getLatitude(), location.getLongitude())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ShopInfo>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onNext(ShopInfo info) {
+                        ShopInfo.DeliveryMode mode = info.getDelivery_mode();
+
+                        ImageView imgIcon=(ImageView)findViewById(R.id.imgIcon);
+                        TextView tvDeliveryMode = (TextView) findViewById(R.id.tvDeliveryMode);
+                        TextView tvWelcome = (TextView) findViewById(R.id.tvWelcome);
+                        TextView tvShopName=(TextView)findViewById(R.id.tvShopName);
+
+                        String imagePath = info.getImage_path();
+                        String shopIconUrl = UrlUtil.getImageUrlFromPath(UrlUtil.SHOP_URL, imagePath, true);
+                        Picasso.with(D).load(shopIconUrl).into(holder.imgShopIcon);
+
+                        String strDelivery = "";
+                        if (mode != null) {
+
+                            //动态设置渐变色
+                            GradientDrawable background = (GradientDrawable) tvDeliveryMode.getBackground();
+                            int startColor = Color.parseColor("#" + mode.getGradient().getRgb_from());
+                            int color = Color.parseColor("#" + mode.getColor());
+                            int endColor = Color.parseColor("#" + mode.getGradient().getRgb_to());
+                            int[] colors = {startColor, color, endColor};
+                            background.setColors(colors);
+                            strDelivery += mode.getText();
+                        } else {
+                            strDelivery += "商家配送";
+                        }
+
+                        String leadTime = info.getOrder_lead_time();
+                        if (leadTime != null && !"".equals(leadTime)) {
+                            strDelivery += "·约" + leadTime + "分钟";
+                        }
+
+                        tvDeliveryMode.setText(strDelivery);
+
+                        String prompt = info.getPromotion_info();
+                        if (prompt == null || "".equals(prompt)) {
+                            prompt = "欢迎光临，用餐高峰期请提前下单，谢谢。";
+                        }
+                        tvWelcome.setText("公告：" + prompt);
+                        tvShopName.setText(info.getName());
+                    }
+                });
     }
 
     private void refreshMenusByRestaurantId(String id) {
@@ -217,70 +299,88 @@ public class DinnerOrderActivity extends AppCompatActivity implements CategoryAd
         }
     }
 
+    public void refreshCategorySelectedCount(String categoryId, int num) {
+        int sum = 0;
+        for (Category category :
+                listCategory) {
+
+            if (categoryId.equals(category.getId())) {
+                category.setSelectedCount(category.getSelectedCount() + num);
+            }
+            sum += category.getSelectedCount();
+        }
+
+        if (sum > 0) {
+            tvCartCount.setVisibility(View.VISIBLE);
+            tvCartCount.setText(String.valueOf(sum));
+        } else {
+            tvCartCount.setVisibility(View.GONE);
+        }
+
+        categoryAdapter.notifyDataSetChanged();
+    }
+
     //动画层
     private ViewGroup anim_mask_layout;
 
     /*
      * 创建动画层
      */
-    private ViewGroup createAnimLayout()
-    {
-        ViewGroup rootView=(ViewGroup)this.getWindow().getDecorView();
-        LinearLayout animLayout=new LinearLayout(this);
-        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(
+    private ViewGroup createAnimLayout() {
+        ViewGroup rootView = (ViewGroup) this.getWindow().getDecorView();
+        LinearLayout animLayout = new LinearLayout(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
         animLayout.setLayoutParams(params);
-        animLayout.setId(Integer.MAX_VALUE-1);
+        animLayout.setId(Integer.MAX_VALUE - 1);
         /*animLayout.setBackgroundResource(android.R.color.holo_purple);
         animLayout.setAlpha(0.3f);*/
         rootView.addView(animLayout);
         return animLayout;
     }
 
-    private View addViewToAnimLayout(ViewGroup parent,View view,int[] location)
-    {
-        int x=location[0];
-        int y=location[1];
+    private View addViewToAnimLayout(ViewGroup parent, View view, int[] location) {
+        int x = location[0];
+        int y = location[1];
 
-        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.leftMargin=x;
-        params.topMargin=y;
+        params.leftMargin = x;
+        params.topMargin = y;
         view.setLayoutParams(params);
         return view;
     }
 
-    public void setAnim(final View _view, int[] startLocation)
-    {
-        anim_mask_layout=createAnimLayout();
+    public void setAnim(final View _view, int[] startLocation) {
+        anim_mask_layout = createAnimLayout();
         anim_mask_layout.addView(_view);
         //startLocation=new int[]{0,0};
-        View view=addViewToAnimLayout(anim_mask_layout,_view,startLocation);
-        int[] endLocation=new int[2];  //存储动画结束为止的X、Y坐标
+        View view = addViewToAnimLayout(anim_mask_layout, _view, startLocation);
+        int[] endLocation = new int[2];  //存储动画结束为止的X、Y坐标
         imgCart.getLocationInWindow(endLocation);
         //imgCart.getLocationOnScreen(endLocation);
 
         //计算位移
-        int endX=endLocation[0]-startLocation[0];
-        int endY=endLocation[1]-startLocation[1];
+        int endX = endLocation[0] - startLocation[0];
+        int endY = endLocation[1] - startLocation[1];
 
-        TranslateAnimation translateAnimX=new TranslateAnimation(0,endX,0,0);
+        TranslateAnimation translateAnimX = new TranslateAnimation(0, endX, 0, 0);
         translateAnimX.setInterpolator(new LinearInterpolator());
         translateAnimX.setRepeatCount(0);
         translateAnimX.setFillAfter(true);
 
-        TranslateAnimation translateAnimY=new TranslateAnimation(0,0,0,endY);
+        TranslateAnimation translateAnimY = new TranslateAnimation(0, 0, 0, endY);
         translateAnimY.setInterpolator(new AccelerateInterpolator());
         translateAnimY.setRepeatCount(0);
         translateAnimY.setFillAfter(true);
 
-        AnimationSet set=new AnimationSet(false);
+        AnimationSet set = new AnimationSet(false);
         set.setFillAfter(false);
         set.addAnimation(translateAnimX);
         set.addAnimation(translateAnimY);
-        set.setDuration(800);
+        set.setDuration(500);
 
         view.startAnimation(set);
         set.setAnimationListener(new Animation.AnimationListener() {

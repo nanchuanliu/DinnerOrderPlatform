@@ -10,9 +10,11 @@ public class Category {
     private String description;
     private List<Food> foods;
     private String icon_url;
+    private String id;
     private String name;
     private int type;
     private boolean selected;
+    private int selectedCount;
 
     public String getDescription() {
         return description;
@@ -60,5 +62,21 @@ public class Category {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public int getSelectedCount() {
+        return selectedCount;
+    }
+
+    public void setSelectedCount(int selectedCount) {
+        this.selectedCount = selectedCount;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

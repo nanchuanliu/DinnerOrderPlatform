@@ -163,6 +163,7 @@ public class RestaurantActivity extends AppCompatActivity {
                 ShopInfo shop=restaurantListAdapter.getAdapterItem(position);
                 Intent orderIntent=new Intent(RestaurantActivity.this,DinnerOrderActivity.class);
                 orderIntent.putExtra("Id",shop.getId());
+                orderIntent.putExtra("Location",curLocation);
                 startActivity(orderIntent);
             }
         });

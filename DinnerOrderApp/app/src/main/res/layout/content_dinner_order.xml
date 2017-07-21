@@ -22,7 +22,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvCategory"
-        android:layout_width="90dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:background="@color/colorLightGray"
         android:layout_marginLeft="0dp"

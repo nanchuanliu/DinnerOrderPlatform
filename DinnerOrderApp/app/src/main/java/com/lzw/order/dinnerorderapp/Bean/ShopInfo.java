@@ -21,6 +21,7 @@ public class ShopInfo {
     private String distance;
     private String order_lead_time;
     private String id;
+    private String promotion_info;
 
     public class ShopActivity {
         private String tips;
@@ -254,5 +255,13 @@ public class ShopInfo {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getPromotion_info() {
+        return promotion_info;
+    }
+
+    public void setPromotion_info(String promotion_info) {
+        this.promotion_info = promotion_info;
     }
 }

@@ -35,8 +35,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view=inflater.inflate(R.layout.list_category,null);
-        ViewHolder holder=new ViewHolder(view);
+        View view = inflater.inflate(R.layout.list_category, null);
+        ViewHolder holder = new ViewHolder(view);
         return holder;
     }
 
@@ -53,15 +53,23 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             holder.imgIcon.setVisibility(View.GONE);
         }
 
+        if (category.getSelectedCount() <= 0) {
+            holder.tvTip.setVisibility(View.GONE);
+        } else {
+            holder.tvTip.setVisibility(View.VISIBLE);
+            holder.tvTip.setText(String.valueOf(category.getSelectedCount()));
+        }
+
         holder.lineCategory.setSelected(category.isSelected());
         holder.tvCategory.setText(category.getName());
         holder.lineCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(itemClickListener!=null)
+                if (itemClickListener != null)
                     itemClickListener.onItemClick(position);
             }
         });
+
     }
 
     @Override
@@ -116,29 +124,28 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         return listViewItem;
     }*/
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout lineCategory;
         ImageView imgIcon;
         TextView tvCategory;
+        TextView tvTip;
 
-        public ViewHolder(View view)
-        {
+        public ViewHolder(View view) {
             super(view);
             imgIcon = (ImageView) view.findViewById(R.id.imgIcon);
             tvCategory = (TextView) view.findViewById(R.id.tvCategory);
-            lineCategory=(LinearLayout)view.findViewById(R.id.lineCategory);
+            lineCategory = (LinearLayout) view.findViewById(R.id.lineCategory);
+            tvTip = (TextView) view.findViewById(R.id.tvTip);
         }
     }
 
-    public interface OnItemClickListener
-    {
+    public interface OnItemClickListener {
         void onItemClick(int position);
     }
 
     private OnItemClickListener itemClickListener;
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener)
-    {
-        this.itemClickListener=onItemClickListener;
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.itemClickListener = onItemClickListener;
     }
 }
