@@ -2,6 +2,7 @@ package com.lzw.order.dinnerorderapp.component;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -95,12 +97,14 @@ public class DishAdapter extends RecyclerView.Adapter<ViewHolder> implements Sti
                 holder.tvCount.setText(num.toString());
                 int[] startLocation=new int[2];
                 holder.imgDishAdd.getLocationInWindow(startLocation);
+/*
                 startLocation[0]= DisplayUtil.px2dip(context,startLocation[0]);
                 startLocation[1]= DisplayUtil.px2dip(context,startLocation[1]);
+*/
 
                 //holder.imgDishAdd.getLocationOnScreen(startLocation);
                 ImageView animView=new ImageView(context);
-                animView.setImageResource(R.drawable.hgr);
+                animView.setImageResource(R.drawable.number);
                 ((DinnerOrderActivity)context).setAnim(animView,startLocation);
             }
         });

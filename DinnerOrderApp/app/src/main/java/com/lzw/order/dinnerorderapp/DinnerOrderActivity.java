@@ -232,8 +232,8 @@ public class DinnerOrderActivity extends AppCompatActivity implements CategoryAd
                 LinearLayout.LayoutParams.MATCH_PARENT);
         animLayout.setLayoutParams(params);
         animLayout.setId(Integer.MAX_VALUE-1);
-        animLayout.setBackgroundResource(android.R.color.holo_purple);
-        animLayout.setAlpha(0.3f);
+        /*animLayout.setBackgroundResource(android.R.color.holo_purple);
+        animLayout.setAlpha(0.3f);*/
         rootView.addView(animLayout);
         return animLayout;
     }
@@ -244,8 +244,8 @@ public class DinnerOrderActivity extends AppCompatActivity implements CategoryAd
         int y=location[1];
 
         LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
         params.leftMargin=x;
         params.topMargin=y;
         view.setLayoutParams(params);
@@ -256,13 +256,14 @@ public class DinnerOrderActivity extends AppCompatActivity implements CategoryAd
     {
         anim_mask_layout=createAnimLayout();
         anim_mask_layout.addView(_view);
+        //startLocation=new int[]{0,0};
         View view=addViewToAnimLayout(anim_mask_layout,_view,startLocation);
         int[] endLocation=new int[2];  //存储动画结束为止的X、Y坐标
         imgCart.getLocationInWindow(endLocation);
         //imgCart.getLocationOnScreen(endLocation);
 
         //计算位移
-        int endX=0-startLocation[0]+20;
+        int endX=endLocation[0]-startLocation[0];
         int endY=endLocation[1]-startLocation[1];
 
         TranslateAnimation translateAnimX=new TranslateAnimation(0,endX,0,0);
