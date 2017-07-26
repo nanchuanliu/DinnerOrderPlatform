@@ -1,6 +1,7 @@
 package com.lzw.order.dinnerorderapp.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import android.widget.LinearLayout;
 
 import com.lzw.order.dinnerorderapp.Bean.GeoInfo;
 import com.lzw.order.dinnerorderapp.Bean.ShopInfo;
+import com.lzw.order.dinnerorderapp.DinnerOrderActivity;
 import com.lzw.order.dinnerorderapp.R;
 import com.lzw.order.dinnerorderapp.component.FoodPagerAdapter;
 import com.lzw.order.dinnerorderapp.component.ShopListRecyclerAdapter;
@@ -109,6 +111,17 @@ public class HomeFragment extends Fragment {
 
         shopListAdapter = new ShopListRecyclerAdapter(getContext());
         rvShopList.setAdapter(shopListAdapter);
+
+        shopListAdapter.setOnItemClickListener(new ShopListRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                ShopInfo shop=shopListAdapter.getAdapterItem(position);
+                Intent orderIntent=new Intent(context,DinnerOrderActivity.class);
+                orderIntent.putExtra("Id",shop.getId());
+                orderIntent.putExtra("Location",curLocation);
+                startActivity(orderIntent);
+            }
+        });
 
         refreshShopList(curLocation.getLatitude(), curLocation.getLongitude(), 0, limit);
 

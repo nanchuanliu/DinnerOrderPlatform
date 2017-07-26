@@ -7,30 +7,50 @@
     tools:context="com.lzw.order.dinnerorderapp.DinnerOrderActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.NoActionBar.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/ctlToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentScrim="@color/colorAccent"
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp"
+            android:background="@color/colorLight"
+            app:expandedTitleGravity="center_vertical"
+            app:expandedTitleMarginStart="128dp"
+            app:expandedTitleMarginTop="-20dp"
+            app:expandedTitleTextAppearance="@style/CollapsedExpandedText"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:layout_collapseParallaxMultiplier="0.1">
 
                 <ImageView
                     android:id="@+id/imgBanner"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_alignParentTop="true"
-                    android:alpha="0.6"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/hgr" />
+                    android:alpha="1"
+                    android:scaleType="fitXY" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:alpha="0.43"
+                    android:background="#776789"
+                    android:scaleType="fitXY" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlLayoutBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_collapseParallaxMultiplier="0.1">
 
                 <ImageView
                     android:id="@+id/imgIcon"
@@ -38,33 +58,24 @@
                     android:layout_height="100dp"
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="60dp"
-                    android:alpha="0.6"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/hgr" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="250dp"
-                    android:layout_marginTop="70dp"
-                    android:text=">"
-                    android:textSize="20dp" />
+                    android:layout_marginTop="30dp"
+                    android:scaleType="fitXY" />
 
                 <TextView
                     android:id="@+id/tvWelcome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="130dp"
-                    android:layout_marginTop="100dp"
-                    android:singleLine="true"
+                    android:layout_marginTop="70dp"
+                    android:paddingRight="10dp"
+                    android:singleLine="false"
                     android:text="欢迎光临！" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="130dp"
-                    android:layout_marginTop="130dp">
+                    android:layout_marginTop="110dp">
 
                     <TextView
                         android:id="@+id/tvIsPremium"
@@ -93,27 +104,17 @@
                 </LinearLayout>
             </RelativeLayout>
 
-            <include
+            <!--    <include
                 layout="@layout/fragment_shop_activity"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content" />-->
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay">
-
-                <TextView
-                    android:id="@+id/tvShopName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="37dp"
-                    android:layout_marginLeft="130dp"
-                    android:layout_marginTop="70dp"
-                    android:text="测试点名"
-                    android:textSize="20dp" />
-            </android.support.v7.widget.Toolbar>
+                app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"></android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
@@ -138,9 +139,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:gravity="center"
         android:layout_marginBottom="12dp"
-        android:layout_marginLeft="12dp">
+        android:layout_marginLeft="12dp"
+        android:gravity="center">
 
         <ImageView
             android:layout_width="60dp"
@@ -151,29 +152,22 @@
             android:id="@+id/imgCart"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/ic_cart"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_cart" />
+
         <TextView
             android:id="@+id/tvCartCount"
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:text="7"
-            android:textSize="13dp"
-            android:gravity="center"
-            android:layout_toRightOf="@+id/imgCart"
-            android:layout_marginTop="5dp"
             android:layout_marginLeft="8dp"
-            android:textColor="@color/colorLight"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/imgCart"
             android:background="@drawable/circle"
-            android:visibility="gone"/>
+            android:gravity="center"
+            android:text="7"
+            android:textColor="@color/colorLight"
+            android:textSize="13dp"
+            android:visibility="gone" />
     </RelativeLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </android.support.design.widget.CoordinatorLayout>

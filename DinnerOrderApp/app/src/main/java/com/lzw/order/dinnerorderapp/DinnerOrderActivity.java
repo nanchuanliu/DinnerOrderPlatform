@@ -6,6 +6,8 @@ import android.graphics.drawable.GradientDrawable;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.TextViewCompat;
@@ -26,6 +28,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +37,7 @@ import com.lzw.order.dinnerorderapp.Bean.Food;
 import com.lzw.order.dinnerorderapp.Bean.ShopInfo;
 import com.lzw.order.dinnerorderapp.component.CategoryAdapter;
 import com.lzw.order.dinnerorderapp.component.DishAdapter;
+import com.lzw.order.dinnerorderapp.component.DividerItemDecoration;
 import com.lzw.order.dinnerorderapp.services.DataService;
 import com.lzw.order.dinnerorderapp.utils.DisplayUtil;
 import com.lzw.order.dinnerorderapp.utils.UrlUtil;
@@ -69,6 +73,7 @@ public class DinnerOrderActivity extends AppCompatActivity implements CategoryAd
     private List<Category> listCategory;
     private ImageView imgCart;
     private TextView tvCartCount;
+    private RelativeLayout rlLayoutBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +82,7 @@ public class DinnerOrderActivity extends AppCompatActivity implements CategoryAd
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        rlLayoutBar = (RelativeLayout) findViewById(R.id.rlLayoutBar);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         restaurantId = bundle.getString("Id");
@@ -85,12 +91,15 @@ public class DinnerOrderActivity extends AppCompatActivity implements CategoryAd
         categoryLayoutManager = new LinearLayoutManager(this);
         rvCategory = (RecyclerView) findViewById(R.id.rvCategory);
         rvCategory.setLayoutManager(categoryLayoutManager);
+        rvCategory.addItemDecoration(new DividerItemDecoration(this, categoryLayoutManager.getOrientation()));
 
         rvDish = (RecyclerView) findViewById(R.id.rvDish);
         dishLayoutManager = new LinearLayoutManager(this);
         dishLayoutManager.setOrientation(OrientationHelper.VERTICAL);
         dishLayoutManager.setAutoMeasureEnabled(true);
         rvDish.setLayoutManager(dishLayoutManager);
+        rvDish.addItemDecoration(new DividerItemDecoration(this, dishLayoutManager.getOrientation()));
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             rvDish.setOnScrollChangeListener(new View.OnScrollChangeListener() {
@@ -111,17 +120,20 @@ public class DinnerOrderActivity extends AppCompatActivity implements CategoryAd
         refreshRestaurantInfo(restaurantId, curLocation);
         refreshMenusByRestaurantId(restaurantId);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         imgCart = (ImageView) findViewById(R.id.imgCart);
         tvCartCount = (TextView) findViewById(R.id.tvCartCount);
+
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                float alpha = 1 + (float) verticalOffset / 100;
+                if (alpha < 0)
+                    alpha = 0;
+
+                rlLayoutBar.setAlpha(alpha);
+            }
+        });
     }
 
     private void refreshRestaurantInfo(String id, Location location) {
@@ -147,14 +159,25 @@ public class DinnerOrderActivity extends AppCompatActivity implements CategoryAd
                     public void onNext(ShopInfo info) {
                         ShopInfo.DeliveryMode mode = info.getDelivery_mode();
 
-                        ImageView imgIcon=(ImageView)findViewById(R.id.imgIcon);
+                        ImageView imgIcon = (ImageView) findViewById(R.id.imgIcon);
+                        ImageView imgBanner = (ImageView) findViewById(R.id.imgBanner);
                         TextView tvDeliveryMode = (TextView) findViewById(R.id.tvDeliveryMode);
                         TextView tvWelcome = (TextView) findViewById(R.id.tvWelcome);
-                        TextView tvShopName=(TextView)findViewById(R.id.tvShopName);
+                        CollapsingToolbarLayout bar = (CollapsingToolbarLayout) findViewById(R.id.ctlToolbar);
 
                         String imagePath = info.getImage_path();
                         String shopIconUrl = UrlUtil.getImageUrlFromPath(UrlUtil.SHOP_URL, imagePath, true);
-                        Picasso.with(D).load(shopIconUrl).into(holder.imgShopIcon);
+                        Picasso.with(DinnerOrderActivity.this).load(shopIconUrl).into(imgIcon);
+
+                        String shopBackUrl = UrlUtil.getImageUrlFromPath(UrlUtil.SHOP_BACK_URL, imagePath, true);
+                        Picasso.with(DinnerOrderActivity.this).load(shopBackUrl).into(imgBanner);
+
+                        TextView tvIsPremium = (TextView) findViewById(R.id.tvIsPremium);
+                        if (info.is_premium()) {
+                            tvIsPremium.setVisibility(VISIBLE);
+                        } else {
+                            tvIsPremium.setVisibility(View.GONE);
+                        }
 
                         String strDelivery = "";
                         if (mode != null) {
@@ -183,7 +206,7 @@ public class DinnerOrderActivity extends AppCompatActivity implements CategoryAd
                             prompt = "欢迎光临，用餐高峰期请提前下单，谢谢。";
                         }
                         tvWelcome.setText("公告：" + prompt);
-                        tvShopName.setText(info.getName());
+                        bar.setTitle(info.getName());
                     }
                 });
     }

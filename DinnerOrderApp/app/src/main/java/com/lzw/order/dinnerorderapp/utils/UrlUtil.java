@@ -25,6 +25,7 @@ public class UrlUtil {
     public static final String SHOP_URL = "http://fuss10.elemecdn.com/%s/%s/%s?imageMogr/format/webp/thumbnail/!120x120r/gravity/Center/crop/120x120/";
     public static final String MENU_URL="https://fuss10.elemecdn.com/%s/%s/%s?imageMogr/format/webp/thumbnail/18x/";
     public static final String DISH_URL="https://fuss10.elemecdn.com/%s/%s/%s?imageMogr/format/webp/thumbnail/!140x140r/gravity/Center/crop/140x140/";
+    public static final String SHOP_BACK_URL="https://fuss10.elemecdn.com/%s/%s/%s?imageMogr/format/webp/thumbnail/!40p/blur/50x40/";
 
     public static String getImageUrlFromPath(String baseUrl, String path, boolean isSuffix) {
         String str1 = path.substring(0, 1);
