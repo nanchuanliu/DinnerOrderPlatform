@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.lzw.weixin.pojo">
+    <class name="Category" table="Category">
+        <id name="categoryId" type="java.lang.Integer">
+            <column name="CategoryId"></column>
+            <generator class="native"/>
+        </id>
+        <property name="categoryName" type="java.lang.String">
+            <column name="CategoryName" length="50"></column>
+        </property>
+    </class>
+</hibernate-mapping>

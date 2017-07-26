@@ -1,3 +1,4 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: LZW
@@ -64,7 +65,36 @@
                     badge.hide();
                 }
             })
+
+            changeCategory(1);
         });
+
+        function changeCategory(categoryId) {
+            $.ajax({
+                type:"POST",
+                data:{categoryId:categoryId},
+                url:"/dish",
+                dataType:"json",
+                success:function (data) {
+                    var controls=$("#divDish>ul").empty();
+                    $.each(data,function (i,dish) {
+                        var li=$("<li/>");
+                        var label=$("<label/>").addClass("label-checkbox item-content");
+                        label.append("<input type='checkbox' name='my-radio'/>");
+                        var divMedia=$("<div/>").addClass("item-media").append("<i class='icon icon-form-checkbox'/>")
+                        label.append(divMedia);
+                        var divInner=$("<div/>").addClass("item-inner");
+                        var divName=$("<div/>").addClass("item-title").html(dish.dishName);
+                        var divPrice=$("<div/>").addClass("item-subtitle").html("¥"+dish.dishPrice+"/份");
+                        divInner.append(divName).append(divPrice);
+                        var img=$("<img/>").attr("src","https://fuss10.elemecdn.com/"+dish.dishImg+"?imageMogr/format/webp/thumbnail/!140x140r/gravity/Center/crop/140x140/").addClass("image");
+                        label.append(divInner).append(img);
+                        li.append(label);
+                        controls.append(li);
+                    })
+                }
+            })
+        }
     </script>
 
     <style>
@@ -87,8 +117,8 @@
 
         .bar-tab .tab-item .icon {
             font-size: 50px;
-            width:inherit;
-            height:inherit;
+            width: inherit;
+            height: inherit;
         }
 
         /*        .bar-nav ~ .content{
@@ -99,8 +129,7 @@
             bottom: 120px;
         }
 
-        .bar-tab .tab-item
-        {
+        .bar-tab .tab-item {
             display: inline;
         }
 
@@ -155,7 +184,6 @@
             <h1 class="title">点餐系统</h1>
         </header>--%>
 
-
     <nav class="bar bar-tab row box" style="display: inline-block;margin-left: 0px;background-color: black;">
         <%--<a class="tab-item " href="#"><span class="icon icon-right"></span></a>--%>
         <div class="pull-right" style="width: 480px;">
@@ -179,21 +207,13 @@
         <div class="col-33 list-block" id="divCategory">
             <ul>
                 <li class="list-group-title">主菜单</li>
-                <li class="item-content">
-                    <div class="item-inner">
-                        <div class="item-title">特色菜</div>
-                    </div>
-                </li>
-                <li class="item-content">
-                    <div class="item-inner">
-                        <div class="item-title">川菜</div>
-                    </div>
-                </li>
-                <li class="item-content">
-                    <div class="item-inner">
-                        <div class="item-title">湘菜</div>
-                    </div>
-                </li>
+                <s:iterator value="categories" var="cat">
+                    <li class="item-content" onclick="changeCategory('${cat.categoryId}')">
+                        <div class="item-inner">
+                            <div class="item-title"><s:property value="#cat.categoryName"/></div>
+                        </div>
+                    </li>
+                </s:iterator>
             </ul>
         </div>
         <div class="col-66 list-block media-list" style="margin-left: 0;width: 66%;" id="divDish">

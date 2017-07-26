@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"></property>
+        <property name="url" value="jdbc:sqlserver://35.185.149.208:1433;DatabaseName=WeiXinPlatform"></property>
+        <property name="username" value="sa"></property>
+        <property name="password" value="Admin123456"></property>
+    </bean>
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.SQLServer2012Dialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <!--<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>-->
+            </props>
+        </property>
+        <property name="mappingLocations">
+            <value>classpath:/com/lzw/weixin/hbm/*.hbm.xml</value>
+        </property>
+    </bean>
+    <bean id="tokenDao" class="com.lzw.weixin.dao.impl.TokenDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="categoryDao" class="com.lzw.weixin.dao.impl.CategoryDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="dishDao" class="com.lzw.weixin.dao.impl.DishDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="tokenService" class="com.lzw.weixin.Services.impl.TokenServiceImpl">
+        <property name="tokenDao" ref="tokenDao"></property>
+    </bean>
+    <bean id="categoryService" class="com.lzw.weixin.Services.impl.CategoryServiceImpl">
+        <property name="dao" ref="categoryDao"></property>
+    </bean>
+    <bean id="dishService" class="com.lzw.weixin.Services.impl.DishServiceImpl">
+        <property name="dao" ref="dishDao"></property>
+    </bean>
+    <bean class="com.lzw.weixin.Utils.SpringUtil"/>
+</beans>

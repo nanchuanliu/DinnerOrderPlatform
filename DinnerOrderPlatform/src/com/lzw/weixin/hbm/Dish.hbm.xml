@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.lzw.weixin.pojo">
+    <class name="Dish" table="Dish">
+        <id name="dishId" type="java.lang.Integer">
+            <column name="DishId"></column>
+            <generator class="native"/>
+        </id>
+        <property name="dishName" type="java.lang.String">
+            <column name="DishName" not-null="true"></column>
+        </property>
+        <property name="dishPrice" type="java.lang.String">
+            <column name="DishPrice"  />
+        </property>
+        <property name="dishImg" type="java.lang.String">
+            <column name="DishImg" ></column>
+        </property>
+        <many-to-one name="category" class="Category" fetch="select" lazy="false">
+            <column name="CategoryId" not-null="true"></column>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

@@ -1,6 +1,8 @@
 package com.lzw.weixin.Utils;
 
+import com.lzw.weixin.dao.TokenDao;
 import com.lzw.weixin.pojo.Token;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.*;
 import java.util.*;
@@ -13,8 +15,11 @@ import java.util.Date;
  */
 public class TokenUtil {
 
+    private static TokenDao tokenDao=(TokenDao) SpringUtil.getBean("tokenDao");
+
     public static Token getToken() {
-        Connection con = null;
+        return tokenDao.getToken();
+       /* Connection con = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         String sql = "select top 1 * from Token order by createTime desc ";
@@ -40,11 +45,12 @@ public class TokenUtil {
             DBUtility.closeConnection(con);
         }
 
-        return token;
+        return token;*/
     }
 
     public static void saveToken(Token token) {
-        Connection conn = null;
+        tokenDao.saveToken(token);
+        /*Connection conn = null;
         PreparedStatement stmt = null;
         String sql = "Insert into Token(AccessToken,ExpiresIn,CreateTime) Values(?,?,?)";
 
@@ -60,7 +66,7 @@ public class TokenUtil {
             System.out.println("数据库操作异常：" + e.getMessage());
         } finally {
             DBUtility.closeConnection(conn);
-        }
+        }*/
     }
 
 }

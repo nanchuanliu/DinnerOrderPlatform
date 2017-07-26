@@ -48,7 +48,7 @@ public class MenuUtil {
         ViewButton btn12=new ViewButton();
         btn12.setName("点菜");
         btn12.setType("view");
-        btn12.setUrl("http://mylife.51vip.biz/ordermenu.jsp");
+        btn12.setUrl("http://mylife.51vip.biz/category");
 
         ViewButton btn13=new ViewButton();
         btn13.setName("店内服务");

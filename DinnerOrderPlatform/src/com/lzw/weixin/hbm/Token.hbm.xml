@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.lzw.weixin.pojo">
+    <class name="Token" table="Token"  >
+        <id name="TokenId" type="java.lang.Integer">
+            <column name="TokenId"></column>
+            <generator class="native"/>
+        </id>
+        <property name="accessToken" type="java.lang.String">
+            <column name="accessToken" length="1000" ></column>
+        </property>
+        <property name="expiresIn" type="java.lang.Integer">
+            <column name="expiresIn" ></column>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -7,9 +7,19 @@ package com.lzw.weixin.pojo;
  */
 public class Token {
 
+    private int TokenId;
+
     private String accessToken;
 
     private int expiresIn;
+
+    public int getTokenId() {
+        return TokenId;
+    }
+
+    public void setTokenId(int tokenId) {
+        TokenId = tokenId;
+    }
 
     public String getAccessToken() {
         return accessToken;

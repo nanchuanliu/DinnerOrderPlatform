@@ -45,5 +45,14 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="struts2" level="project" />
+    <orderEntry type="library" name="spring" level="project" />
+    <orderEntry type="library" name="commons-fileupload" level="project" />
+    <orderEntry type="library" name="hibernate" level="project" />
+    <orderEntry type="library" name="spring-tx-4.3.9.RELEASE" level="project" />
+    <orderEntry type="library" name="com.hynnet:commons-lang3:3.4" level="project" />
+    <orderEntry type="library" name="struts2-json-plugin-2.5" level="project" />
+    <orderEntry type="library" name="json-lib-2.4" level="project" />
+    <orderEntry type="library" name="struts2-json-plugin-2.3.3" level="project" />
   </component>
 </module>
